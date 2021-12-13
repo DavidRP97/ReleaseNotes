@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ReleaseNotes.Entities.Model.ReleasesPowerServer
+namespace ReleaseNotes.Entities.Model.ReleasesPowerPDV
 {
-    public class Module
+    public class ModulePDV
     {
         [Key]
         public long ModuleId { get; set; }
@@ -16,7 +16,7 @@ namespace ReleaseNotes.Entities.Model.ReleasesPowerServer
         [Required]
         public string Notes { get; set; }
         [ForeignKey("ReleaseId")]
-        public virtual Release Release { get; set; }
+        public virtual ReleasePDV Release { get; set; }
         public long ReleaseId { get; set; }
     }
 }

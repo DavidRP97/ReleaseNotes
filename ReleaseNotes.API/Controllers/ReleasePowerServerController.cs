@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReleaseNotes.Entities.Model.ReleasesPowerServer;
-using ReleaseNotes.Repository.Interfaces.ReleasesPowerServer;
+using ReleaseNotes.Repository.Interfaces;
 
 namespace ReleaseNotes.API.Controllers
 {
@@ -15,7 +15,7 @@ namespace ReleaseNotes.API.Controllers
             _releasePowerServerRepository = releaseRepository ?? throw new ArgumentNullException(nameof(releaseRepository));
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult> FindById(long id)
+        public async Task<ActionResult> GetById(long id)
         {
             var release = await _releasePowerServerRepository.GetById(id);
             if (release == null) return NotFound();
@@ -32,9 +32,8 @@ namespace ReleaseNotes.API.Controllers
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult<Release>> Create([FromBody] Release release)
         {
-            if (release == null) return NotFound();
-
-            var addRelease = await _releasePowerServerRepository.InsertRange(release);
+            if (release == null) return NotFound();            
+            var addRelease = await _releasePowerServerRepository.InsertRange(release);            
             return Ok(addRelease);
         }
         [HttpPut]

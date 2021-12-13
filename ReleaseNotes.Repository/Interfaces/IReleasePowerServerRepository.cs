@@ -1,12 +1,7 @@
 ﻿using ReleaseNotes.Entities.Model.ReleasesPowerServer;
 using ReleaseNotes.Repository.Interfaces.Generic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ReleaseNotes.Repository.Interfaces.ReleasesPowerServer
+namespace ReleaseNotes.Repository.Interfaces
 {
     public interface IReleasePowerServerRepository : IGenericRepository<Release>
     {

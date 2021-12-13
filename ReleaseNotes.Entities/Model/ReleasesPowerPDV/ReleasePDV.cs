@@ -1,14 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ReleaseNotes.Entities.Model.ReleasesPowerServer
+namespace ReleaseNotes.Entities.Model.ReleasesPowerPDV
 {
-    public class Release
+    public class ReleasePDV
     {
         [Key]
         public long ReleaseId { get; set; }
         [Required]
         public string VersionNumber { get; set; }
         [Required]
-        public IEnumerable<Module> Modules { get; set; }
+        public IEnumerable<ModulePDV> Modules { get; set; }
     }
 }

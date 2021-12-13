@@ -1,11 +1,11 @@
-﻿namespace ReleaseNotes.Service.PowerServer.Models
+﻿namespace ReleaseNotes.Service.Models.PDV
 {
-    public class ModulePowerServerViewModel
+    public class ModulePDVViewModel
     {
         public long ModuleId { get; set; }
         public string ModuleName { get; set; }
-        public long ReleaseId { get; set; }
         public string Title { get; set; }
         public string Notes { get; set; }
+        public long ReleaseId { get; set; }
     }
 }

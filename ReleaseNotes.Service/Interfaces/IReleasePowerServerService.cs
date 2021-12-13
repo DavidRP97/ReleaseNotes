@@ -1,14 +1,8 @@
-﻿using ReleaseNotes.Entities.Model.ReleasesPowerServer;
-using ReleaseNotes.Service.PowerServer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ReleaseNotes.Service.PowerServer.Models;
 
 namespace ReleaseNotes.Service.Interfaces
 {
-    public  interface IRealesePowerServerService
+    public  interface IReleasePowerServerService
     {
         Task<IEnumerable<ReleasePowerServerViewModel>> FindAllReleases();
         Task<ReleasePowerServerViewModel> FindReleaseById(long id, string token);

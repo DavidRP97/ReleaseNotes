@@ -1,15 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReleaseNotes.Entities.Model.ReleasesPowerServer;
 using ReleaseNotes.Repository.Context;
-using ReleaseNotes.Repository.Interfaces.ReleasesPowerServer;
-using ReleaseNotes.Repository.Repositories.Generic;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ReleaseNotes.Repository.Interfaces;
 
-namespace ReleaseNotes.Repository.Repositories.ReleasesPowerServer
+namespace ReleaseNotes.Repository.Repositories
 {
     public class ReleasePowerServerRepository : GenericRepository<Release>, IReleasePowerServerRepository
     {

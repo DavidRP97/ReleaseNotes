@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ReleasePowerServerViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="col-lg-12">
+    <div class="card">
+        <div class="card-header">
+            <h4>PowerServer</h4>
+        </div>
+        <div class="card-body">
+            <p class="text-muted m-b-15">
+                Notas de Versões
+            </p>
+
+            <ul class="list-unstyled">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a asp-action="Modules" asp-route-id="@item.ReleaseId" asp-controller="ReleasePowerServer">Versão: @item.VersionNumber</a>
+                    </li>
+                }
+            </ul>
+
+        </div>
+    </div>
+</div>

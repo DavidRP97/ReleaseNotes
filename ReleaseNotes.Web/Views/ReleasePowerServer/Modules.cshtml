@@ -1,0 +1,23 @@
+﻿@model IEnumerable<ReleasePowerServerViewModel>
+@{
+    ViewData["Title"] = "Detalhes da Versão";
+}
+
+@foreach (var item in Model)
+{
+    <div class="card">
+        @foreach (var module in item.Modules)
+        {
+
+            <div class="card-header">
+                <strong>@module.ModuleName (@module.Title)</strong>
+            </div>
+            <div class="card-body card-block">
+                <div class="form-group">
+                    <label form-control-label">@module.Notes</label>
+                </div>
+            </div>
+        }
+    </div>
+}
+

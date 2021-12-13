@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddHttpClient<IRealesePowerServerService, ReleasePowerServerService>(c =>
+builder.Services.AddHttpClient<IReleasePowerServerService, ReleasePowerServerService>(c =>
                 c.BaseAddress = new Uri("https://localhost:7221")
             );
 var app = builder.Build();

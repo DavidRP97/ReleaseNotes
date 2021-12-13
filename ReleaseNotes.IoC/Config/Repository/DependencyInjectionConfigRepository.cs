@@ -1,11 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ReleaseNotes.Repository.Interfaces.ReleasesPowerServer;
-using ReleaseNotes.Repository.Repositories.ReleasesPowerServer;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ReleaseNotes.Repository.Interfaces;
+using ReleaseNotes.Repository.Repositories;
 
 namespace ReleaseNotes.IoC.Config.Repository
 {
@@ -14,6 +9,7 @@ namespace ReleaseNotes.IoC.Config.Repository
         public static void ConfigureDIRepository(this IServiceCollection services)
         {
             services.AddScoped<IReleasePowerServerRepository, ReleasePowerServerRepository>();
+            services.AddScoped<IReleasePowerPDVRepository, ReleasePowerPDVRepository>();
         }
     }
 }

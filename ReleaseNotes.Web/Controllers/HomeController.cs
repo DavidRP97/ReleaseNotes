@@ -8,8 +8,8 @@ namespace ReleaseNotes.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IRealesePowerServerService _realesePowerServerService;
-        public HomeController(ILogger<HomeController> logger, IRealesePowerServerService realesePowerServerService)
+        private readonly IReleasePowerServerService _realesePowerServerService;
+        public HomeController(ILogger<HomeController> logger, IReleasePowerServerService realesePowerServerService)
         {
             _logger = logger;
             _realesePowerServerService = realesePowerServerService;
