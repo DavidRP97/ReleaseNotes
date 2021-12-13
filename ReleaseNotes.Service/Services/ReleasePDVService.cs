@@ -8,7 +8,7 @@ namespace ReleaseNotes.Service.Services
     public class ReleasePDVService : IReleasePDVService
     {
         private readonly HttpClient _httpClient;
-        private const string BasePath = "api/v1/ReleasePowerServer";
+        private const string BasePath = "api/v1/ReleasePDV";
 
         public ReleasePDVService(HttpClient httpClient)
         {

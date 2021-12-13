@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ReleasePowerServerViewModel>
+﻿@model IEnumerable<ReleasePDVViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -7,7 +7,7 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            <h4>PowerServer</h4>
+            <h4>PDV</h4>
         </div>
         <div class="card-body">
             <p class="text-muted m-b-15">
@@ -18,7 +18,7 @@
                 @foreach (var item in Model)
                 {
                     <li>
-                        <a asp-action="Modules" asp-route-id="@item.ReleaseId" asp-controller="ReleasePowerServer"><b>Versão: </b>@item.VersionNumber - @item.VersionDate</a>
+                        <a asp-action="Modules" asp-route-id="@item.ReleaseId" asp-controller="ReleasePDV"><b>Versão: </b>@item.VersionNumber - @item.VersionDate</a>
                     </li>
                 }
             </ul>

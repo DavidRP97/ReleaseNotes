@@ -23,17 +23,17 @@ builder.Services.AddAuthentication("Bearer")
                     };
                 });
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("ApiScope", policy =>
-    {
-        policy.RequireAuthenticatedUser();
-        policy.RequireClaim("scope", "geek_shopping");
-    });
-});
+//builder.Services.AddAuthorization(options =>
+//{
+//    options.AddPolicy("ApiScope", policy =>
+//    {
+//        policy.RequireAuthenticatedUser();
+//        policy.RequireClaim("scope", "geek_shopping");
+//    });
+//});
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "GeekShopping.ProductAPI", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ReleaseNotes", Version = "v1" });
     c.EnableAnnotations();
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {

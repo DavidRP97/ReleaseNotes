@@ -22,7 +22,8 @@ namespace ReleaseNotes.Repository.Context
             modelBuilder.Entity<Release>().HasData(new Release
             {
                 ReleaseId = 1,
-                VersionNumber = "1.0"
+                VersionNumber = "1.0",
+                VersionDate = DateTime.Now.ToShortDateString()
             });
             modelBuilder.Entity<Module>(m =>
             {
@@ -32,7 +33,7 @@ namespace ReleaseNotes.Repository.Context
                     ModuleName = "Comercial",
                     Title = "Vendas por pedido",
                     ReleaseId = 1,
-                    Notes = "Criado novas funcionalidades"
+                    Notes = "Criado novas funcionalidades"                    
                 });
                 m.HasData(new Module
                 {
@@ -54,7 +55,8 @@ namespace ReleaseNotes.Repository.Context
             modelBuilder.Entity<Release>().HasData(new Release
             {
                 ReleaseId = 2,
-                VersionNumber = "2.0"
+                VersionNumber = "2.0",
+                VersionDate = DateTime.Now.ToShortDateString()
             });
             modelBuilder.Entity<Module>(m =>
             {
@@ -78,7 +80,8 @@ namespace ReleaseNotes.Repository.Context
             modelBuilder.Entity<ReleasePDV>().HasData(new ReleasePDV
             {
                 ReleaseId = 1,
-                VersionNumber = "1.0"
+                VersionNumber = "1.0",
+                VersionDate = DateTime.Now.ToShortDateString()
             });
             modelBuilder.Entity<ModulePDV>(m =>
             {

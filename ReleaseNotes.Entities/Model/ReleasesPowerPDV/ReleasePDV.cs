@@ -7,6 +7,8 @@ namespace ReleaseNotes.Entities.Model.ReleasesPowerPDV
         [Key]
         public long ReleaseId { get; set; }
         [Required]
+        public string VersionDate { get; set; }
+        [Required]
         public string VersionNumber { get; set; }
         [Required]
         public IEnumerable<ModulePDV> Modules { get; set; }

@@ -9,6 +9,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<IReleasePowerServerService, ReleasePowerServerService>(c =>
                 c.BaseAddress = new Uri("https://localhost:7221")
             );
+builder.Services.AddHttpClient<IReleasePDVService, ReleasePDVService>(c =>
+                c.BaseAddress = new Uri("https://localhost:7221")
+            );
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

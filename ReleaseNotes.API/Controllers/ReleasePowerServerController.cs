@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ReleaseNotes.Entities.Model.ReleasesPowerServer;
 using ReleaseNotes.Repository.Interfaces;
+using System.Net;
 
 namespace ReleaseNotes.API.Controllers
 {
@@ -32,9 +33,23 @@ namespace ReleaseNotes.API.Controllers
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult<Release>> Create([FromBody] Release release)
         {
-            if (release == null) return NotFound();            
-            var addRelease = await _releasePowerServerRepository.InsertRange(release);            
-            return Ok(addRelease);
+            try
+            {
+                if (release == null) return NotFound();
+                var addRelease = await _releasePowerServerRepository.InsertRange(release);
+                return Ok(addRelease);
+            }
+            catch (WebException ex)
+            {
+                var response = ex.Response as HttpWebResponse;
+
+                if (response.StatusCode.HasFlag(HttpStatusCode.Unauthorized))
+                {
+                    return StatusCode(StatusCodes.Status401Unauthorized, "Não Autorizado, Faça login e tente novamente!");
+                }
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro no servidor!");
+            }
         }
         [HttpPut]
         [Authorize(AuthenticationSchemes = "Bearer")]
