@@ -95,8 +95,7 @@ p {
 
 .cardtable {
     display: flex;
-    flex-direction: row;
-    
+    flex-direction: row;    
 }
 
 .btn {
