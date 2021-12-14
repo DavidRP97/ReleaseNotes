@@ -35,5 +35,7 @@ namespace ReleaseNotes.Repository.Repositories
             await Save();
             return release;
         }
+
+        public async Task<ReleasePDV> SelectByIdWithInclude(long id) => await _context.ReleasePDVs.Include(x => x.Modules).Where(y => y.ReleaseId == id).FirstOrDefaultAsync();
     }
 }

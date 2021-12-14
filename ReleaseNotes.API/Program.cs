@@ -16,21 +16,21 @@ builder.Services.AddDbContext<NpgSqlContext>(options => options.UseNpgsql(connec
 builder.Services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "https://localhost:4435/";
+                    options.Authority = builder.Configuration["UrlAuthority:Url"];
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateAudience = false
                     };
                 });
 
-//builder.Services.AddAuthorization(options =>
-//{
-//    options.AddPolicy("ApiScope", policy =>
-//    {
-//        policy.RequireAuthenticatedUser();
-//        policy.RequireClaim("scope", "geek_shopping");
-//    });
-//});
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ApiScope", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("scope", "release_notes");
+    });
+});
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "ReleaseNotes", Version = "v1" });
@@ -81,6 +81,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ReleaseNotes.API.Utils;
 using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
 using ReleaseNotes.Repository.Interfaces;
 
@@ -17,7 +18,7 @@ namespace ReleaseNotes.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> FindById(long id)
         {
-            var release = await _releasePowerPDVRepository.GetById(id);
+            var release = await _releasePowerPDVRepository.SelectByIdWithInclude(id);
             if (release == null) return NotFound();
             return Ok(release);
         }
@@ -29,7 +30,7 @@ namespace ReleaseNotes.API.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = Role.SuperControleAdmin, AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult<ReleasePDV>> Create([FromBody] ReleasePDV release)
         {
             if (release == null) return NotFound();
@@ -38,7 +39,7 @@ namespace ReleaseNotes.API.Controllers
             return Ok(addRelease);
         }
         [HttpPut]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = Role.SuperControleAdmin, AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult<ReleasePDV>> Update([FromBody] ReleasePDV release)
         {
             if (release == null) return NotFound();
@@ -46,7 +47,7 @@ namespace ReleaseNotes.API.Controllers
             return Ok(addRelease);
         }
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = Role.SuperControleAdmin, AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Delete(long id)
         {
             var status = await _releasePowerPDVRepository.DeleteRange(id);

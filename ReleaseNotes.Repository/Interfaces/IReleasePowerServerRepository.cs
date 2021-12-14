@@ -7,6 +7,7 @@ namespace ReleaseNotes.Repository.Interfaces
     {
         public Task<Release>InsertRange(Release release);
         public Task<bool> DeleteRange(long id);
+        public Task<Release> SelectByIdWithInclude(long id);
         public Task<IEnumerable<Release>> GetAllIncludeModule();
     }
 }

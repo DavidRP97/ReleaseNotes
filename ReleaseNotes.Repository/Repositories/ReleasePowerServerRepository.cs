@@ -40,5 +40,7 @@ namespace ReleaseNotes.Repository.Repositories
 
             return list;
         }
+
+        public async Task<Release> SelectByIdWithInclude(long id) => await _context.Releases.Include(x => x.Modules).Where(y => y.ReleaseId == id).FirstOrDefaultAsync();
     }
 }

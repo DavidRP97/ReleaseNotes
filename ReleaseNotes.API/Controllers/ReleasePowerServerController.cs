@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ReleaseNotes.API.Utils;
 using ReleaseNotes.Entities.Model.ReleasesPowerServer;
 using ReleaseNotes.Repository.Interfaces;
 using System.Net;
@@ -18,7 +19,7 @@ namespace ReleaseNotes.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(long id)
         {
-            var release = await _releasePowerServerRepository.GetById(id);
+            var release = await _releasePowerServerRepository.SelectByIdWithInclude(id);
             if (release == null) return NotFound();
             return Ok(release);
         }
@@ -30,7 +31,7 @@ namespace ReleaseNotes.API.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = Role.SuperControleAdmin, AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult<Release>> Create([FromBody] Release release)
         {
             try
@@ -52,7 +53,7 @@ namespace ReleaseNotes.API.Controllers
             }
         }
         [HttpPut]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = Role.SuperControleAdmin, AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult<Release>> Update([FromBody] Release release)
         {
             if (release == null) return NotFound();
@@ -60,7 +61,7 @@ namespace ReleaseNotes.API.Controllers
             return Ok(addRelease);
         }
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = Role.SuperControleAdmin, AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Delete(long id)
         {
             var status = await _releasePowerServerRepository.DeleteRange(id);
