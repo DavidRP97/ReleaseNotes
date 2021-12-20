@@ -20,6 +20,7 @@ namespace ReleaseNotes.Service.Utils
         public static Task<HttpResponseMessage> PostAsJson<T>(this HttpClient httpClient, string url, T data)
         {
             var dataAsString = JsonSerializer.Serialize(data);
+
             var content = new StringContent(dataAsString);
 
             content.Headers.ContentType = contentType;

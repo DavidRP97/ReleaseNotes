@@ -1,4 +1,25 @@
-﻿<!DOCTYPE html>
+﻿@using ReleaseNotes.Web.Repository
+
+@inject IUser _user;
+@inject UserManager<ApplicationUser> _userManager
+
+@{
+    string? usuario = User.Identity.Name;
+    string? Email = string.Empty;
+    string? FirstName = string.Empty;
+    string? LastName = string.Empty;
+
+    if(User.Identity.IsAuthenticated)
+    {
+        var app = await _user.GetUserByUserName(usuario);
+        Email = app.Email;
+        FirstName = app.FirstName;
+        LastName = app.LastName;
+    }    
+
+    
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,7 +30,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
     <!-- Fontfaces CSS-->
     <link href="~/css/font-face.css" rel="stylesheet" media="all">
-    <link href="~/css/site.css" rel="stylesheet" media="all"/>
+    <link href="~/css/site.css" rel="stylesheet" media="all" />
     <link href="~/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
     <link href="~/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
     <link href="~/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
@@ -31,9 +52,9 @@
 <body class="animsition">
     <div class="page-wrapper">
         <aside class="menu-sidebar d-none d-lg-block">
-            <div class="logo">
-                <a asp-action="Index" asp-controller="Home">Super Controle</a>
-            </div>
+            <a class="logo" asp-action="Index" asp-controller="Home">
+                <img src="~/images/Logo atual vertical - SuperControle (azul)-04 (2).png" />
+            </a>
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
@@ -55,6 +76,22 @@
                                 <i class="fas fa-bars"></i> Manuais
                             </a>
                         </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="active has-sub">
+                                <a class="js-arrow" href="#">
+                                    <i class="fas fa-gear"></i>Painel de Controle
+                                </a>
+                                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                    <li>
+                                        <a asp-action="Index" asp-controller="ReleasePowerServer"><i class="fas  fa-plus-square"></i>PowerServer</a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="Index" asp-controller="ReleasePDV"><i class="fas  fa-plus-square"></i>PDV</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
                     </ul>
                 </nav>
             </div>
@@ -72,45 +109,52 @@
                                     <i class="zmdi zmdi-search"></i>
                                 </button>
                             </form>
-                            <div class="header-button">
+                            @if (User.Identity.IsAuthenticated)
+                            {
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="~/images/Logo atual - Super Controle - Azul (chave).png" alt="David" />
+                                            <img src="~/images/Logo atual - Super Controle - Azul (chave).png" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"> </a>
+                                            <a class="js-acc-btn" href="#">@FirstName @LastName</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="~/images/Logo atual - Super Controle - Azul (chave).png"/>
+                                                        <img src="~/images/Logo atual - Super Controle - Azul (chave).png" alt="John Doe" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">David</a>
+                                                        <a href="#">@FirstName @LastName</a>
                                                     </h5>
-                                                    <span class="email">teste@teste.com.br</span>
+                                                    <span class="email">@Email</span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
                                                 <div class="account-dropdown__item">
-                                                    <a asp-action="MyInformations" asp-controller="Employees">
-                                                        <i class="zmdi zmdi-account"></i>Conta
-                                                    </a>
-                                                </div>
-                                                <div class="account-dropdown__item">
                                                     <a href="#">
-                                                        <i class="zmdi zmdi-settings"></i>Configurar
+                                                        <i class="zmdi zmdi-account"></i>Gerenciar Conta
                                                     </a>
                                                 </div>
+                                            </div>
+                                            <div class="account-dropdown__item">
+                                                <a asp-action="Logout" asp-controller="Authorize">
+                                                    <i class="fas fa-arrow-left"></i>Sair
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+                                <a asp-action="Login" asp-controller="Home" class="btn btn-primary">
+                                    Login
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>
@@ -124,7 +168,6 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">
-
                                 </div>
                             </div>
                         </div>

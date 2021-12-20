@@ -20,5 +20,10 @@ namespace ReleaseNotes.Web.Controllers
             var releases = await _releasePDVService.FindAllReleases();
             return View(releases.Where(c => c.ReleaseId == id));
         }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+
+        }
     }
 }

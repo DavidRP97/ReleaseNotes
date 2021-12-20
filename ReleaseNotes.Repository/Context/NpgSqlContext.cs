@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
 using ReleaseNotes.Entities.Model.ReleasesPowerServer;
 
@@ -33,7 +35,7 @@ namespace ReleaseNotes.Repository.Context
                     ModuleName = "Comercial",
                     Title = "Vendas por pedido",
                     ReleaseId = 1,
-                    Notes = "Criado novas funcionalidades"                    
+                    Notes = "Criado novas funcionalidades"
                 });
                 m.HasData(new Module
                 {

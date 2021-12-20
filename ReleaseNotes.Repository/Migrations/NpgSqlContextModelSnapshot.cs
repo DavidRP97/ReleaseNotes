@@ -16,7 +16,7 @@ namespace ReleaseNotes.Repository.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.0")
+                .HasAnnotation("ProductVersion", "6.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -103,7 +103,7 @@ namespace ReleaseNotes.Repository.Migrations
                         new
                         {
                             ReleaseId = 1L,
-                            VersionDate = "13/12/2021",
+                            VersionDate = "20/12/2021",
                             VersionNumber = "1.0"
                         });
                 });
@@ -206,13 +206,13 @@ namespace ReleaseNotes.Repository.Migrations
                         new
                         {
                             ReleaseId = 1L,
-                            VersionDate = "13/12/2021",
+                            VersionDate = "20/12/2021",
                             VersionNumber = "1.0"
                         },
                         new
                         {
                             ReleaseId = 2L,
-                            VersionDate = "13/12/2021",
+                            VersionDate = "20/12/2021",
                             VersionNumber = "2.0"
                         });
                 });

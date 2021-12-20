@@ -34,8 +34,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - Service", "04 - Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReleaseNotes.Service", "ReleaseNotes.Service\ReleaseNotes.Service.csproj", "{F4B33DA5-EEE2-4CCC-9467-982DD367E04B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReleaseNotes.IdentityServer", "ReleaseNotes.IdentityServer\ReleaseNotes.IdentityServer.csproj", "{9DA072E4-ED56-4749-8D8F-9B468BA371A9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,10 +64,6 @@ Global
 		{F4B33DA5-EEE2-4CCC-9467-982DD367E04B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4B33DA5-EEE2-4CCC-9467-982DD367E04B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4B33DA5-EEE2-4CCC-9467-982DD367E04B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9DA072E4-ED56-4749-8D8F-9B468BA371A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9DA072E4-ED56-4749-8D8F-9B468BA371A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9DA072E4-ED56-4749-8D8F-9B468BA371A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9DA072E4-ED56-4749-8D8F-9B468BA371A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,7 +75,6 @@ Global
 		{62425E97-F55A-4239-A8E9-04DFD0F3D5A4} = {A3022184-5454-4C1B-88D6-4CEFA3A6326C}
 		{57E4CA00-F62B-4864-9773-E5B4CDF4A6E3} = {1D0FE076-3FA7-4514-A130-7744AADA938C}
 		{F4B33DA5-EEE2-4CCC-9467-982DD367E04B} = {8C3FC8E4-5632-4D6D-80C4-4DDE95A63112}
-		{9DA072E4-ED56-4749-8D8F-9B468BA371A9} = {1D0FE076-3FA7-4514-A130-7744AADA938C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C11CC34-E193-4A7B-8EA6-FD574A6B4BEB}
