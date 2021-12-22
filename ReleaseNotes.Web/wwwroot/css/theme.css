@@ -98,6 +98,10 @@ p {
     flex-direction: row;    
 }
 
+.tar {
+    text-align: right;
+}
+
 .btn {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -135,6 +139,7 @@ h2 {
     font-size: 30px;
 }
 
+
 h3 {
     font-size: 24px;
 }
@@ -157,6 +162,10 @@ blockquote {
 
 strong {
     font-weight: 700;
+}
+
+.centro {
+    text-align: center;
 }
 
 /*-----------------------------------------------------*/

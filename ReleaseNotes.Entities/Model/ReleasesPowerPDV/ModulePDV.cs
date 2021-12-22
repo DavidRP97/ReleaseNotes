@@ -14,6 +14,9 @@ namespace ReleaseNotes.Entities.Model.ReleasesPowerPDV
         [StringLength(50)]
         public string Title { get; set; }
         [Required]
+        [StringLength(30)]
+        public string Status { get; set; }
+        [Required]
         public string Notes { get; set; }
         [ForeignKey("ReleaseId")]
         public virtual ReleasePDV Release { get; set; }

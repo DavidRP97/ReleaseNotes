@@ -1,0 +1,74 @@
+﻿@model ReleaseNotes.Service.Models.PDV.ReleasePDVViewModel
+
+@if (User.IsInRole("SuperControleAdmin"))
+{
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h3 class="text-center title-2">Informações de Versão</h3>
+                </div>
+                <hr>
+                <form action="" method="post" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="company" class=" form-control-label">Número da Versão</label>
+                                <input type="text" id="company" placeholder="Ex: 1.05" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="company" class=" form-control-label">Data Lançamento da Versão</label>
+                                <input asp-for="VersionDate" class="form-control" placeholder="@DateTime.Now.ToShortDateString()" id="MaskDate">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="fa fa-dot-circle-o"></i> Salvar
+                        </button>
+                    </div>
+                </form>
+                <div class="card-title">
+                    <h3 class="text-center title-2">Notas de Versão</h3>
+                </div>
+                <hr>
+                <form action="" method="post" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="company" class=" form-control-label">Módulo</label>
+                                <input type="text" id="company" placeholder="Módulo" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="form-group">
+                                <label for="company" class=" form-control-label">Titulo da Nota</label>
+                                <input type="text" id="company" placeholder="Titulo da Nota" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="company" class=" form-control-label">Descrição da Nota</label>
+                            <textarea name="textarea-input" id="textarea-input" rows="9" placeholder="Descrição..." class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="zmdi zmdi-plus"></i> Adicionar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <partial name="_Credential" />
+}
+
+

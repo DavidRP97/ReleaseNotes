@@ -11,11 +11,13 @@ namespace ReleaseNotes.Repository.Repositories
         {
             _context = context; 
         }
-        public async Task Delete(int id)
+        public async Task<bool> Delete(long id)
         {
             var entity = await GetById(id);
-            _context.Set<TEntity>().Remove(entity);
+            if (entity == null) return false;
+            _context.Set<TEntity>().RemoveRange(entity);
             await Save();
+            return true;
         }
 
         public async Task<IEnumerable<TEntity>> GetAll() => await _context.Set<TEntity>().ToListAsync();

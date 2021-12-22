@@ -11,6 +11,12 @@
 
             <div class="card-header">
                 <strong>@module.ModuleName (@module.Title)</strong>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <button type="button" class="btn btn-danger" style="position: center; float: right;">
+                        <i class="fa fa-rss"></i>&nbsp; Feedback
+                    </button>
+                }
             </div>
             <div class="card-body card-block">
                 <div class="form-group">

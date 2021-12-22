@@ -1,48 +1,9 @@
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using ReleaseNotes.Service.Interfaces;
 using ReleaseNotes.Service.Services;
-using ReleaseNotes.Web.Context;
-using ReleaseNotes.Web.JWT;
-using ReleaseNotes.Web.Repository;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var connection = builder.Configuration.GetConnectionString("DefaultConnection");
-
-builder.Services.AddDbContext<NpgSqlDbContext>(options => options.UseNpgsql(connection));
-
-var identity = builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<NpgSqlDbContext>()
-                .AddDefaultTokenProviders();
-
-builder.Services.AddAuthentication(
-                JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.SaveToken = true;
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidAudience = builder.Configuration["TokenConfiguration:Audience"],
-            ValidIssuer = builder.Configuration["TokenConfiguration:Issuer"],
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]))
-        };
-    });
-    
-                
-
-builder.Services.AddSession();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -52,9 +13,30 @@ builder.Services.AddHttpClient<IReleasePowerServerService, ReleasePowerServerSer
             );
 builder.Services.AddHttpClient<IReleasePDVService, ReleasePDVService>(c =>
                 c.BaseAddress = new Uri(builder.Configuration["ServiceUrls:ReleasePDV"])
+
             );
-builder.Services.AddScoped<ITokenGenerate, TokenGenerate>();
-builder.Services.AddScoped<IUser, User>();
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = "Cookies";
+    options.DefaultChallengeScheme = "oidc";
+})
+                .AddCookie("Cookies", c => c.ExpireTimeSpan = TimeSpan.FromMinutes(10))
+                .AddOpenIdConnect("oidc", options =>
+                {
+                    options.Authority = builder.Configuration["ServiceUrls:IdentityServer"];
+                    options.GetClaimsFromUserInfoEndpoint = true;
+                    options.ClientId = "release_notes";
+                    options.ClientSecret = "app_secret";
+                    options.ResponseType = "code";
+                    options.ClaimActions.MapJsonKey("role", "role", "role");
+                    options.ClaimActions.MapJsonKey("sub", "sub", "sub");
+                    options.TokenValidationParameters.NameClaimType = "name";
+                    options.TokenValidationParameters.RoleClaimType = "role";
+                    options.Scope.Add("release_notes");
+                    options.SaveTokens = true;
+                }
+            );
 
 var app = builder.Build();
 
@@ -71,18 +53,6 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
-app.UseSession();
-
-app.Use(async (context, next) =>
-{
-    var token = context.Session.GetString("JWTToken");
-    if (!string.IsNullOrEmpty(token))
-    {
-        context.Request.Headers.Add("Authorization", "Bearer" + token);
-    }
-    await next();
-});
 
 app.UseAuthentication();
 

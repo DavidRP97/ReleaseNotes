@@ -1,24 +1,7 @@
-﻿@using ReleaseNotes.Web.Repository
-
-@inject IUser _user;
-@inject UserManager<ApplicationUser> _userManager
-
-@{
-    string? usuario = User.Identity.Name;
-    string? Email = string.Empty;
-    string? FirstName = string.Empty;
-    string? LastName = string.Empty;
-
-    if(User.Identity.IsAuthenticated)
-    {
-        var app = await _user.GetUserByUserName(usuario);
-        Email = app.Email;
-        FirstName = app.FirstName;
-        LastName = app.LastName;
-    }    
-
-    
+﻿@{
+    string Email = User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(x => x.Type == "email").Value : string.Empty;
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -76,7 +59,7 @@
                                 <i class="fas fa-bars"></i> Manuais
                             </a>
                         </li>
-                        @if (User.Identity.IsAuthenticated)
+                        @if (User.IsInRole("SuperControleAdmin"))
                         {
                             <li class="active has-sub">
                                 <a class="js-arrow" href="#">
@@ -87,7 +70,7 @@
                                         <a asp-action="Index" asp-controller="ReleasePowerServer"><i class="fas  fa-plus-square"></i>PowerServer</a>
                                     </li>
                                     <li>
-                                        <a asp-action="Index" asp-controller="ReleasePDV"><i class="fas  fa-plus-square"></i>PDV</a>
+                                        <a asp-action="IndexControlPainel" asp-controller="ReleasePDV"><i class="fas  fa-plus-square"></i>PDV</a>
                                     </li>
                                 </ul>
                             </li>
@@ -117,7 +100,7 @@
                                             <img src="~/images/Logo atual - Super Controle - Azul (chave).png" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">@FirstName @LastName</a>
+                                            <a class="js-acc-btn" href="#">@User.Identity.Name</a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -128,7 +111,7 @@
                                                 </div>
                                                 <div class="content">
                                                     <h5 class="name">
-                                                        <a href="#">@FirstName @LastName</a>
+                                                        <a href="#">@User.Identity.Name</a>
                                                     </h5>
                                                     <span class="email">@Email</span>
                                                 </div>
@@ -141,7 +124,7 @@
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__item">
-                                                <a asp-action="Logout" asp-controller="Authorize">
+                                                <a asp-action="Logout" asp-controller="Home">
                                                     <i class="fas fa-arrow-left"></i>Sair
                                                 </a>
                                             </div>
@@ -198,7 +181,8 @@
     <script src="~/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="~/vendor/select2/select2.min.js"></script>
     <!-- Main JS-->
-    <script src="~/js/main.js"></script>
+    <script src="~/js/main.js"></script> 
+    <script src="~/js/mask.js"></script> 
 
 </body>
 

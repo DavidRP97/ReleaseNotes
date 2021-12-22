@@ -7,6 +7,6 @@
         Task<TEntity> Insert(TEntity entity);
         Task<TEntity> Update(TEntity entity);
         Task Save();
-        Task Delete(int id);
+        Task<bool> Delete(long id);
     }
 }

@@ -50,7 +50,7 @@ namespace ReleaseNotes.API.Controllers
         [Authorize(AuthenticationSchemes = "Bearer")]
         public async Task<ActionResult> Delete(long id)
         {
-            var status = await _releasePowerPDVRepository.DeleteRange(id);
+            var status = await _releasePowerPDVRepository.Delete(id);
             if (!status) return BadRequest();
             return Ok(status);
         }

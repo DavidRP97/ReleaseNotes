@@ -15,10 +15,12 @@ namespace ReleaseNotes.Repository.Repositories
 
         public async Task<bool> DeleteRange(long id)
         {
-            var entity = GetById(id);
+            var entity = _context.ReleasePDVs.FindAsync(id);
+
             if (entity == null) return false;
 
             _context.RemoveRange(entity);
+
             await Save();
 
             return true;

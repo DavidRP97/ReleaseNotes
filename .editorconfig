@@ -11,3 +11,9 @@ dotnet_diagnostic.CS8603.severity = none
 
 # CS1998: O método assíncrono não possui operadores 'await' e será executado de forma síncrona
 dotnet_diagnostic.CS1998.severity = none
+
+# CS0472: O resultado da expressão é sempre o mesmo, pois um valor deste tipo nunca é 'null' 
+dotnet_diagnostic.CS0472.severity = none
+
+# CS8604: Possível argumento de referência nula.
+dotnet_diagnostic.CS8604.severity = none
