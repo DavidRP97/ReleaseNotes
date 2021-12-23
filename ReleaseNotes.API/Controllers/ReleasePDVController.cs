@@ -35,11 +35,20 @@ namespace ReleaseNotes.API.Controllers
         {
             if (release == null) return NotFound();
 
-            var addRelease = await _releasePowerPDVRepository.InsertRange(release);
+            var addRelease = await _releasePowerPDVRepository.InsertRelease(release);
+            return Ok(addRelease);
+        }
+
+        [HttpPost("CreateModules")]
+        public async Task<ActionResult<ModulePDV>> Create([FromBody] ModulePDV module)
+        {
+            if (module == null) return NotFound();
+
+            var addRelease = await _releasePowerPDVRepository.InsertModule(module);
             return Ok(addRelease);
         }
         [HttpPut]
-        [Authorize(Roles = Role.SuperControleAdmin)]
+        [Authorize]
         public async Task<ActionResult<ReleasePDV>> Update([FromBody] ReleasePDV release)
         {
             if (release == null) return NotFound();
@@ -47,7 +56,7 @@ namespace ReleaseNotes.API.Controllers
             return Ok(addRelease);
         }
         [HttpDelete("{id}")]
-        [Authorize(Roles = Role.SuperControleAdmin)]
+        [Authorize]
         public async Task<ActionResult> Delete(long id)
         {
             var status = await _releasePowerPDVRepository.Delete(id);

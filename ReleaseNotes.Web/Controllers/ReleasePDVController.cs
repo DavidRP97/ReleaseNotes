@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
 using ReleaseNotes.Service.Interfaces;
 using ReleaseNotes.Service.Models.PDV;
+using System.Text.Json;
 
 namespace ReleaseNotes.Web.Controllers
 {
@@ -25,32 +26,77 @@ namespace ReleaseNotes.Web.Controllers
             var releases = await _releasePDVService.FindAllReleases();
             return View(releases.Where(c => c.ReleaseId == id));
         }
+
         [Authorize]
-        [HttpDelete("{id}")]
+        [HttpPost]
         public async Task<ActionResult> Delete(int id)
         {
-            string token = string.Empty;
+            var token = await HttpContext.GetTokenAsync("access_token");
+
             var model = await _releasePDVService.DeleteReleaseById(id, token);
+
             if (model != null) return View(model);
             return NotFound();
-        }
+        }        
+
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(ReleasePDVViewModel model)
         {
-            var listaRelease = new List<ReleasePDVViewModel>();
 
             if (ModelState.IsValid)
             {
                 var token = await HttpContext.GetTokenAsync("access_token");
                 var response = await _releasePDVService.CreateRelease(model, token);
-                if (response != null) return RedirectToAction(nameof(Index));
+                TempData["ID"] = JsonSerializer.Serialize(response.ReleaseId);
+
+                return RedirectToAction(nameof(CreateModules));
             }
             return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> CreateModules(ModulePDVViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {   
+                
+
+                var token = await HttpContext.GetTokenAsync("access_token");
+
+                var response = await _releasePDVService.CreateModule(model, token);
+
+                TempData["ReleaseId"] = JsonSerializer.Serialize(response.ReleaseId);
+
+                return RedirectToAction(nameof(CreateModules));
+            }
+            return View(model);
+        }
+        public async Task<IActionResult> CreateModules()
+        {
+            return View();
         }
         public async Task<IActionResult> Create()
         {
             return View();
+        }
+        public async Task<ActionResult> Delete(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var token = await HttpContext.GetTokenAsync("access_token");
+            var obj = await _releasePDVService.FindReleaseById(id.Value, token);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+
         }
 
         [Authorize]

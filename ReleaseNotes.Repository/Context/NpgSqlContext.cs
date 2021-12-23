@@ -38,8 +38,7 @@ namespace ReleaseNotes.Repository.Context
                     ModuleName = "Comercial",
                     Title = "Vendas por pedido",
                     ReleaseId = 1,
-                    Notes = "Criado novas funcionalidades",
-                    Status = Consts.Estavel
+                    Notes = "Criado novas funcionalidades"
                 });
                 m.HasData(new Module
                 {
@@ -47,8 +46,7 @@ namespace ReleaseNotes.Repository.Context
                     ModuleName = "Financeiro",
                     Title = "Contas a pagar",
                     ReleaseId = 1,
-                    Notes = "Adicionado novos meios de pagamento",
-                    Status = Consts.Refazer
+                    Notes = "Adicionado novos meios de pagamento"
                 });
                 m.HasData(new Module
                 {
@@ -56,8 +54,7 @@ namespace ReleaseNotes.Repository.Context
                     ModuleName = "Integrações",
                     Title = "Scanntech",
                     ReleaseId = 1,
-                    Notes = "Implementado",
-                    Status = Consts.Estavel 
+                    Notes = "Implementado"
                 });
             });
             modelBuilder.Entity<Release>().HasData(new Release
@@ -74,8 +71,7 @@ namespace ReleaseNotes.Repository.Context
                     ModuleName = "Fiscal",
                     Title = "NF Entrada",
                     ReleaseId = 2,
-                    Notes = "Correção na emissão",
-                    Status = Consts.ComAlteracoes
+                    Notes = "Correção na emissão"
                 });
                 m.HasData(new Module
                 {
@@ -83,8 +79,7 @@ namespace ReleaseNotes.Repository.Context
                     ModuleName = "Financeiro",
                     Title = "Contas a receber",
                     ReleaseId = 2,
-                    Notes = "Corrigido Bug",
-                    Status = Consts.Estavel
+                    Notes = "Corrigido Bug"
                 });
             });
             modelBuilder.Entity<ReleasePDV>().HasData(new ReleasePDV
@@ -101,8 +96,7 @@ namespace ReleaseNotes.Repository.Context
                     ModuleName = "Comercial",
                     Title = "Vendas por pedido",
                     ReleaseId = 1,
-                    Notes = "Criado novas funcionalidades",
-                    Status = Consts.ComAlteracoes
+                    Notes = "Criado novas funcionalidades"
                 });
                 m.HasData(new ModulePDV
                 {
@@ -110,8 +104,7 @@ namespace ReleaseNotes.Repository.Context
                     ModuleName = "Financeiro",
                     Title = "Contas a pagar",
                     ReleaseId = 1,
-                    Notes = "Adicionado novos meios de pagamento",
-                    Status = Consts.Estavel
+                    Notes = "Adicionado novos meios de pagamento"
                 });
                 m.HasData(new ModulePDV
                 {
@@ -119,8 +112,7 @@ namespace ReleaseNotes.Repository.Context
                     ModuleName = "Integrações",
                     Title = "Scanntech",
                     ReleaseId = 1,
-                    Notes = "Implementado",
-                    Status = Consts.Estavel
+                    Notes = "Implementado"
                 });
             });
         }

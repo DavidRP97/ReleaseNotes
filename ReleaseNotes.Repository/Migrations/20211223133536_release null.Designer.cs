@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ReleaseNotes.Repository.Context;
@@ -11,9 +12,10 @@ using ReleaseNotes.Repository.Context;
 namespace ReleaseNotes.Repository.Migrations
 {
     [DbContext(typeof(NpgSqlContext))]
-    partial class NpgSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20211223133536_release null")]
+    partial class releasenull
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -174,6 +176,11 @@ namespace ReleaseNotes.Repository.Migrations
                     b.Property<long>("ReleaseId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -192,6 +199,7 @@ namespace ReleaseNotes.Repository.Migrations
                             ModuleName = "Comercial",
                             Notes = "Criado novas funcionalidades",
                             ReleaseId = 1L,
+                            Status = "Alterações a Serem Feitas",
                             Title = "Vendas por pedido"
                         },
                         new
@@ -200,6 +208,7 @@ namespace ReleaseNotes.Repository.Migrations
                             ModuleName = "Financeiro",
                             Notes = "Adicionado novos meios de pagamento",
                             ReleaseId = 1L,
+                            Status = "Estável",
                             Title = "Contas a pagar"
                         },
                         new
@@ -208,6 +217,7 @@ namespace ReleaseNotes.Repository.Migrations
                             ModuleName = "Integrações",
                             Notes = "Implementado",
                             ReleaseId = 1L,
+                            Status = "Estável",
                             Title = "Scanntech"
                         });
                 });
@@ -261,6 +271,11 @@ namespace ReleaseNotes.Repository.Migrations
                     b.Property<long>("ReleaseId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -279,6 +294,7 @@ namespace ReleaseNotes.Repository.Migrations
                             ModuleName = "Comercial",
                             Notes = "Criado novas funcionalidades",
                             ReleaseId = 1L,
+                            Status = "Estável",
                             Title = "Vendas por pedido"
                         },
                         new
@@ -287,6 +303,7 @@ namespace ReleaseNotes.Repository.Migrations
                             ModuleName = "Financeiro",
                             Notes = "Adicionado novos meios de pagamento",
                             ReleaseId = 1L,
+                            Status = "Retornar para Desenvolvimento",
                             Title = "Contas a pagar"
                         },
                         new
@@ -295,6 +312,7 @@ namespace ReleaseNotes.Repository.Migrations
                             ModuleName = "Integrações",
                             Notes = "Implementado",
                             ReleaseId = 1L,
+                            Status = "Estável",
                             Title = "Scanntech"
                         },
                         new
@@ -303,6 +321,7 @@ namespace ReleaseNotes.Repository.Migrations
                             ModuleName = "Fiscal",
                             Notes = "Correção na emissão",
                             ReleaseId = 2L,
+                            Status = "Alterações a Serem Feitas",
                             Title = "NF Entrada"
                         },
                         new
@@ -311,6 +330,7 @@ namespace ReleaseNotes.Repository.Migrations
                             ModuleName = "Financeiro",
                             Notes = "Corrigido Bug",
                             ReleaseId = 2L,
+                            Status = "Estável",
                             Title = "Contas a receber"
                         });
                 });

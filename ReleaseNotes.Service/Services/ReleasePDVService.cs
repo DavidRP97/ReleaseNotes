@@ -9,6 +9,8 @@ namespace ReleaseNotes.Service.Services
     {
         private readonly HttpClient _httpClient;
         private const string BasePath = "api/v1/ReleasePDV";
+        private const string BasePathModules = "api/v1/ReleasePDV/CreateModules";
+         
 
         public ReleasePDVService(HttpClient httpClient)
         {
@@ -53,6 +55,15 @@ namespace ReleaseNotes.Service.Services
             if (response.IsSuccessStatusCode)
                 return await response.ReadContentAs<ReleasePDVViewModel>();
             else throw new Exception("Something went wrong when calling API");
+        }
+
+        public async Task<ModulePDVViewModel> CreateModule(ModulePDVViewModel model, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.PostAsJson(BasePathModules, model);
+            if (response.IsSuccessStatusCode)
+                return await response.ReadContentAs<ModulePDVViewModel>();
+            else throw new Exception("Somenthing wrong when calling API");
         }
     }
 }
