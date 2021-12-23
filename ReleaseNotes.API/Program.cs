@@ -15,57 +15,56 @@ var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<NpgSqlContext>(options => options.UseNpgsql(connection));
 
-var identity = builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<NpgSqlContext>()
-                .AddDefaultTokenProviders();
+builder.Services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "https://localhost:7222/";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
+                });
 
-builder.Services.AddAuthentication(
-                JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.SaveToken = true;
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidAudience = builder.Configuration["TokenConfiguration:Audience"],
-            ValidIssuer = builder.Configuration["TokenConfiguration:Issuer"],
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:key"]))
-        };
-    });
-
-builder.Services.AddSwaggerGen(setup =>
+builder.Services.AddAuthorization(options =>
 {
-    // Include 'SecurityScheme' to use JWT Authentication
-    var jwtSecurityScheme = new OpenApiSecurityScheme
+    options.AddPolicy("ApiScope", policy =>
     {
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        Name = "JWT Authentication",
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("scope", "release_notes");
+    });
+});
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ReleaseNotesAPI", Version = "v1" });
+    c.EnableAnnotations();
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = @"Enter 'Bearer' [space] and your token!",
+        Name = "Authorization",
         In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
-        Description = "Put your Bearer code below!",
-
-        Reference = new OpenApiReference
-        {
-            Id = JwtBearerDefaults.AuthenticationScheme,
-            Type = ReferenceType.SecurityScheme
-        }
-    };
-
-    setup.AddSecurityDefinition(jwtSecurityScheme.Reference.Id, jwtSecurityScheme);
-
-    setup.AddSecurityRequirement(new OpenApiSecurityRequirement
-    {
-
-        { jwtSecurityScheme, Array.Empty<string>() }
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
     });
 
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In= ParameterLocation.Header
+                        },
+                        new List<string> ()
+                    }
+                });
 });
+
 
 builder.Services.ConfigureDIRepository();
 

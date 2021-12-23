@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
 using ReleaseNotes.Service.Interfaces;
 using ReleaseNotes.Service.Models.PDV;
 
@@ -37,6 +38,8 @@ namespace ReleaseNotes.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ReleasePDVViewModel model)
         {
+            var listaRelease = new List<ReleasePDVViewModel>();
+
             if (ModelState.IsValid)
             {
                 var token = await HttpContext.GetTokenAsync("access_token");

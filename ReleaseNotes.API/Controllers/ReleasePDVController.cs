@@ -29,8 +29,8 @@ namespace ReleaseNotes.API.Controllers
             return Ok(releases);
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        //[ValidateAntiForgeryToken]
+        //[Authorize(Roles = Role.SuperControleAdmin)]
         public async Task<ActionResult<ReleasePDV>> Create([FromBody] ReleasePDV release)
         {
             if (release == null) return NotFound();
@@ -39,7 +39,7 @@ namespace ReleaseNotes.API.Controllers
             return Ok(addRelease);
         }
         [HttpPut]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = Role.SuperControleAdmin)]
         public async Task<ActionResult<ReleasePDV>> Update([FromBody] ReleasePDV release)
         {
             if (release == null) return NotFound();
@@ -47,7 +47,7 @@ namespace ReleaseNotes.API.Controllers
             return Ok(addRelease);
         }
         [HttpDelete("{id}")]
-        [Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = Role.SuperControleAdmin)]
         public async Task<ActionResult> Delete(long id)
         {
             var status = await _releasePowerPDVRepository.Delete(id);

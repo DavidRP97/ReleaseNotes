@@ -9,18 +9,21 @@
                     <h3 class="text-center title-2">Informações de Versão</h3>
                 </div>
                 <hr>
-                <form action="" method="post" novalidate="novalidate">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="company" class=" form-control-label">Número da Versão</label>
-                                <input type="text" id="company" placeholder="Ex: 1.05" class="form-control">
+                                <input asp-for="VersionNumber" id="company" placeholder="Ex: 1.05" class="form-control">
+                                <span asp-validation-for="VersionNumber" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="company" class=" form-control-label">Data Lançamento da Versão</label>
                                 <input asp-for="VersionDate" class="form-control" placeholder="@DateTime.Now.ToShortDateString()" id="MaskDate">
+                                <span asp-validation-for="VersionDate" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -35,6 +38,7 @@
                 </div>
                 <hr>
                 <form action="" method="post" novalidate="novalidate">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="row">
                         <div class="col-6">
                             <div class="form-group">

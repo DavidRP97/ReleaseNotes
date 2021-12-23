@@ -34,6 +34,63 @@
 </head>
 <body class="animsition">
     <div class="page-wrapper">
+        <header class="header-mobile d-block d-lg-none">
+            <div class="header-mobile__bar">
+                <div class="container-fluid">
+                    <div class="header-mobile-inner">
+                        <a class="logo" asp-action="Index" asp-controller="Home">
+                            <img src="~/images/Logo atual vertical - SuperControle (azul)-04 (2).png" />
+                        </a>
+                        <button class="hamburger hamburger--slider" type="button">
+                            <span class="hamburger-box">
+                                <span class="hamburger-inner"></span>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <nav class="navbar-mobile">
+                <div class="container-fluid">
+                    <ul class="navbar-mobile__list list-unstyled">
+                        <li class="active has-sub">
+                            <a class="js-arrow" href="#">
+                                <i class="fas fa-table"></i>Notas de Versão
+                            </a>
+                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                <li>
+                                    <a asp-action="Index" asp-controller="ReleasePowerServer"><i class="fas  fa-plus-square"></i>PowerServer</a>
+                                </li>
+                                <li>
+                                    <a asp-action="Index" asp-controller="ReleasePDV"><i class="fas  fa-plus-square"></i>PDV</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a asp-action="" asp-controller="">
+                                <i class="fas fa-bars"></i> Manuais
+                            </a>
+                        </li>
+                        @if (User.IsInRole("SuperControleAdmin"))
+                        {
+                            <li class="active has-sub">
+                                <a class="js-arrow" href="#">
+                                    <i class="fas fa-gear"></i>Painel de Controle
+                                </a>
+                                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                    <li>
+                                        <a asp-action="Index" asp-controller="ReleasePowerServer"><i class="fas  fa-plus-square"></i>PowerServer</a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="IndexControlPainel" asp-controller="ReleasePDV"><i class="fas  fa-plus-square"></i>PDV</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- END HEADER MOBILE-->
         <aside class="menu-sidebar d-none d-lg-block">
             <a class="logo" asp-action="Index" asp-controller="Home">
                 <img src="~/images/Logo atual vertical - SuperControle (azul)-04 (2).png" />
@@ -181,8 +238,8 @@
     <script src="~/vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="~/vendor/select2/select2.min.js"></script>
     <!-- Main JS-->
-    <script src="~/js/main.js"></script> 
-    <script src="~/js/mask.js"></script> 
+    <script src="~/js/main.js"></script>
+    <script src="~/js/mask.js"></script>
 
 </body>
 

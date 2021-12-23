@@ -10,7 +10,6 @@ namespace ReleaseNotes.Entities.Model.ReleasesPowerServer
         public string VersionNumber { get; set; }
         [Required]
         public string VersionDate { get; set; }
-        [Required]
-        public IEnumerable<Module> Modules { get; set; }
+        public IEnumerable<Module>? Modules { get; set; }
     }
 }

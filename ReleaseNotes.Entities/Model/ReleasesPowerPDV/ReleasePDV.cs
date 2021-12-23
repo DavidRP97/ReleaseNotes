@@ -10,7 +10,6 @@ namespace ReleaseNotes.Entities.Model.ReleasesPowerPDV
         public string VersionDate { get; set; }
         [Required]
         public string VersionNumber { get; set; }
-        [Required]
-        public IEnumerable<ModulePDV> Modules { get; set; }
+        public IEnumerable<ModulePDV>? Modules { get; set; }
     }
 }
