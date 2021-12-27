@@ -16,7 +16,7 @@ namespace ReleaseNotes.Entities.Model.ReleasesPowerServer
         [Required]
         public string Notes { get; set; }
         [ForeignKey("ReleaseId")]
-        public virtual Release Release { get; set; }
+        public virtual Release? Release { get; set; }
         public long ReleaseId { get; set; }
     }
 }

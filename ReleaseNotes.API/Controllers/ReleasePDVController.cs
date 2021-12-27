@@ -22,6 +22,13 @@ namespace ReleaseNotes.API.Controllers
             if (release == null) return NotFound();
             return Ok(release);
         }
+        [HttpGet("Module/{id}")]
+        public async Task<ActionResult> FindModuleById(long id)
+        {
+            var release = await _releasePowerPDVRepository.SelectModuleById(id);
+            if (release == null) return NotFound();
+            return Ok(release);
+        }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ReleasePDV>>> GetAll()
         {
@@ -29,8 +36,8 @@ namespace ReleaseNotes.API.Controllers
             return Ok(releases);
         }
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[Authorize(Roles = Role.SuperControleAdmin)]
+        [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<ActionResult<ReleasePDV>> Create([FromBody] ReleasePDV release)
         {
             if (release == null) return NotFound();
@@ -40,6 +47,7 @@ namespace ReleaseNotes.API.Controllers
         }
 
         [HttpPost("CreateModules")]
+        [Authorize]
         public async Task<ActionResult<ModulePDV>> Create([FromBody] ModulePDV module)
         {
             if (module == null) return NotFound();
@@ -52,12 +60,20 @@ namespace ReleaseNotes.API.Controllers
         public async Task<ActionResult<ReleasePDV>> Update([FromBody] ReleasePDV release)
         {
             if (release == null) return NotFound();
-            var addRelease = await _releasePowerPDVRepository.Insert(release);
+            var addRelease = await _releasePowerPDVRepository.Update(release);
+            return Ok(addRelease);
+        }
+        [HttpPut("UpdateModules")]
+        [Authorize]
+        public async Task<ActionResult<ModulePDV>> Update([FromBody] ModulePDV module)
+        {
+            if (module == null) return NotFound();
+            var addRelease = await _releasePowerPDVRepository.UpdateModules(module);
             return Ok(addRelease);
         }
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<ActionResult> Delete(long id)
+        public async Task<ActionResult<bool>> Delete(long id)
         {
             var status = await _releasePowerPDVRepository.Delete(id);
             if (!status) return BadRequest();

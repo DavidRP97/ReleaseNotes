@@ -9,6 +9,9 @@ namespace ReleaseNotes.Service.Services
     {
         private readonly HttpClient _httpClient;
         private const string BasePath = "api/v1/ReleasePowerServer";
+        private const string BasePathFindModule = "api/v1/ReleasePowerServer/Module";
+        private const string BasePathModules = "api/v1/ReleasePowerServer/CreateModules";
+        private const string BasePathUpdateModules = "api/v1/ReleasePowerServer/UpdateModules";
         public ReleasePowerServerService(HttpClient httpClient)
         {
             _httpClient = httpClient ?? throw new ArgumentNullException(nameof(httpClient));   
@@ -52,5 +55,29 @@ namespace ReleaseNotes.Service.Services
             return await response.ReadContentAs<ReleasePowerServerViewModel>();
         }
 
+        public async Task<ModulePowerServerViewModel> CreateModule(ModulePowerServerViewModel model, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.PostAsJson(BasePathModules, model);
+            if (response.IsSuccessStatusCode)
+                return await response.ReadContentAs<ModulePowerServerViewModel>();
+            else throw new Exception("Somenthing wrong when calling API");
+        }
+
+        public async Task<ModulePowerServerViewModel> UpdateModule(ModulePowerServerViewModel model, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.PutAsJson(BasePathUpdateModules, model);
+            if (response.IsSuccessStatusCode)
+                return await response.ReadContentAs<ModulePowerServerViewModel>();
+            else throw new Exception("Something went wrong when calling API");
+        }
+
+        public async Task<ModulePowerServerViewModel> FindModuleById(long id, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.GetAsync($"{BasePathFindModule}/{id}");
+            return await response.ReadContentAs<ModulePowerServerViewModel>();
+        }
     }
 }

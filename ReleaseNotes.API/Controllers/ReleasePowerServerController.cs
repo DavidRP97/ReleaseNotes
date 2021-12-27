@@ -23,6 +23,13 @@ namespace ReleaseNotes.API.Controllers
             if (release == null) return NotFound();
             return Ok(release);
         }
+        [HttpGet("Module/{id}")]
+        public async Task<ActionResult> FindModuleById(long id)
+        {
+            var release = await _releasePowerServerRepository.SelectModuleById(id);
+            if (release == null) return NotFound();
+            return Ok(release);
+        }
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Release>>> GetAll()
         {
@@ -30,14 +37,13 @@ namespace ReleaseNotes.API.Controllers
             return Ok(releases);
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = Role.SuperControleAdmin, AuthenticationSchemes = "Bearer")]
+        [Authorize]
         public async Task<ActionResult<Release>> Create([FromBody] Release release)
         {
             try
             {
                 if (release == null) return NotFound();
-                var addRelease = await _releasePowerServerRepository.InsertRange(release);
+                var addRelease = await _releasePowerServerRepository.InsertRelease(release);
                 return Ok(addRelease);
             }
             catch (WebException ex)
@@ -52,16 +58,33 @@ namespace ReleaseNotes.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Erro no servidor!");
             }
         }
+        [HttpPost("CreateModules")]
+        [Authorize]
+        public async Task<ActionResult<Module>> Create([FromBody] Module module)
+        {
+            if (module == null) return NotFound();
+
+            var addRelease = await _releasePowerServerRepository.InsertModule(module);
+            return Ok(addRelease);
+        }
         [HttpPut]
-        [Authorize(Roles = Role.SuperControleAdmin, AuthenticationSchemes = "Bearer")]
+        [Authorize]
         public async Task<ActionResult<Release>> Update([FromBody] Release release)
         {
             if (release == null) return NotFound();
-            var addRelease = await _releasePowerServerRepository.Insert(release);
+            var addRelease = await _releasePowerServerRepository.Update(release);
+            return Ok(addRelease);
+        }
+        [HttpPut("UpdateModules")]
+        [Authorize]
+        public async Task<ActionResult<Module>> Update([FromBody] Module module)
+        {
+            if (module == null) return NotFound();
+            var addRelease = await _releasePowerServerRepository.UpdateModules(module);
             return Ok(addRelease);
         }
         [HttpDelete("{id}")]
-        [Authorize(Roles = Role.SuperControleAdmin, AuthenticationSchemes = "Bearer")]
+        [Authorize]
         public async Task<ActionResult> Delete(long id)
         {
             var status = await _releasePowerServerRepository.DeleteRange(id);

@@ -6,6 +6,7 @@ using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
 using ReleaseNotes.Service.Interfaces;
 using ReleaseNotes.Service.Models.PDV;
 using System.Text.Json;
+using X.PagedList;
 
 namespace ReleaseNotes.Web.Controllers
 {
@@ -26,6 +27,11 @@ namespace ReleaseNotes.Web.Controllers
             var releases = await _releasePDVService.FindAllReleases();
             return View(releases.Where(c => c.ReleaseId == id));
         }
+        public async Task<ActionResult> Details(long id)
+        {
+            var releases = await _releasePDVService.FindAllReleases();
+            return View(releases.Where(c => c.ReleaseId == id));
+        }
 
         [Authorize]
         [HttpPost]
@@ -35,7 +41,7 @@ namespace ReleaseNotes.Web.Controllers
 
             var model = await _releasePDVService.DeleteReleaseById(id, token);
 
-            if (model != null) return View(model);
+            if (model == true) return RedirectToAction(nameof(IndexControlPainel));
             return NotFound();
         }        
 
@@ -101,12 +107,57 @@ namespace ReleaseNotes.Web.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult> IndexControlPainel()
+        public async Task<ActionResult> IndexControlPainel(int? pagina)
         {
+            const int PageItens = 10;
+
+            int NumeroPagina = (pagina ?? 1);
+
             var releases = await _releasePDVService.FindAllReleases();
-            return View(releases);
-        }     
-        
+            return View(releases.ToPagedList(NumeroPagina, PageItens));
+        }
+
+        public async Task<IActionResult> Update(int id)
+        {
+            var token = await HttpContext.GetTokenAsync("access_token");
+            var model = await _releasePDVService.FindReleaseById(id, token);
+            if (model != null) return View(model);
+            return NotFound();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> Update(ReleasePDVViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var token = await HttpContext.GetTokenAsync("access_token");
+                var response = await _releasePDVService.UpdateRelease(model, token);
+                if (response != null) return RedirectToAction(
+                     nameof(IndexControlPainel));
+            }
+            return View(model);
+        }
+        public async Task<IActionResult> UpdateModules(int id)
+        {
+            var token = await HttpContext.GetTokenAsync("access_token");
+            var model = await _releasePDVService.FindModuleById(id, token);
+            if (model != null) return View(model);
+            return NotFound();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> UpdateModules(ModulePDVViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var token = await HttpContext.GetTokenAsync("access_token");
+                var response = await _releasePDVService.UpdateModule(model, token);
+                if (response != null) return RedirectToAction("Details", new {id = response.ReleaseId});
+            }
+            return View(model);
+        }
 
     }
 }

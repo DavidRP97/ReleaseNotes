@@ -1,0 +1,35 @@
+﻿@model IEnumerable<ReleasePDVViewModel>
+@{
+    ViewData["Title"] = "Detalhes da Versão";
+}
+
+@if (User.IsInRole(@Role.SuperControleAdmin))
+{
+    @foreach (var item in Model)
+    {
+        <div class="card">
+            @foreach (var module in item.Modules)
+            {
+
+                <div class="card-header">
+                    <strong style="position: center;">@module.ModuleName (@module.Title)</strong>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-action="UpdateModules" asp-controller="ReleasePDV" asp-route-id="@module.ModuleId" class="item" data-toggle="tooltip" data-placement="top" title="Editar" style="position: center; float: right;">
+                            <i class="zmdi zmdi-edit"></i>
+                        </a>
+                    }
+                </div>
+                <div class="card-body card-block">
+                    <div class="form-group">
+                        <label form-control-label">@module.Notes</label>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}
+else
+{
+    <partial name="_Credential" />
+}

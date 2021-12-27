@@ -1,4 +1,4 @@
-﻿@model X.PagedList.IPagedList<ReleasePDVViewModel>
+﻿@model X.PagedList.IPagedList<ReleasePowerServerViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,10 +14,10 @@
                 <div class="table-data__tool-left">
                 </div>
                 <div class="table-data__tool-right">
-                    <a asp-action="Create" asp-controller="ReleasePDV" class="au-btn au-btn-icon au-btn--green au-btn--small">
+                    <a asp-action="Create" asp-controller="ReleasePowerServer" class="au-btn au-btn-icon au-btn--green au-btn--small">
                         <i class="zmdi zmdi-plus"></i>add versão
                     </a>
-                    <a asp-action="CreateModules" asp-controller="ReleasePDV" class="au-btn au-btn-icon au-btn--green au-btn--small">
+                    <a asp-action="CreateModules" asp-controller="ReleasePowerServer" class="au-btn au-btn-icon au-btn--green au-btn--small">
                         <i class="zmdi zmdi-plus"></i>add notas
                     </a>
                 </div>
@@ -46,13 +46,13 @@
                                     <td>@item.Modules.Count()</td>
                                     <td>
                                         <div class="table-data-feature">                                            
-                                            <a asp-action="Update" asp-controller="ReleasePDV" asp-route-id="@item.ReleaseId" class="item" data-toggle="tooltip" data-placement="top" title="Editar">
+                                            <a asp-action="Update" asp-controller="ReleasePowerServer" asp-route-id="@item.ReleaseId" class="item" data-toggle="tooltip" data-placement="top" title="Editar">
                                                 <i class="zmdi zmdi-edit"></i>
                                             </a>
-                                            <a asp-action="Delete" asp-controller="ReleasePDV" asp-route-id="@item.ReleaseId" class="item" data-placement="top" data-toggle="tooltip" title="Excluir">
+                                            <a asp-action="Delete" asp-controller="ReleasePowerServer" asp-route-id="@item.ReleaseId" class="item" data-placement="top" data-toggle="tooltip" title="Excluir">
                                                 <i class="zmdi zmdi-delete"></i>
                                             </a>
-                                            <a asp-action="Details" asp-controller="ReleasePDV" asp-route-id="@item.ReleaseId" class="item" data-toggle="tooltip" data-placement="top" title="Notas">
+                                            <a asp-action="Update" asp-controller="ReleasePDV" asp-route-id="@item.ReleaseId" class="item" data-toggle="tooltip" data-placement="top" title="Editar">
                                                 <i class="zmdi zmdi-more"></i>
                                             </a>
                                         </div>
@@ -67,7 +67,8 @@
             <!-- END DATA TABLE -->
     </div>
     </div>
-   @Html.PagedListPager(Model, pagina => Url.Action("IndexControlPainel", new { pagina }), new PagedListRenderOptions
+
+    @Html.PagedListPager(Model, pagina => Url.Action("IndexControlPainel", new { pagina }), new PagedListRenderOptions
 {
 	LiElementClasses = new[] { "page-item" },
 	PageClasses = new[] { "page-link" },

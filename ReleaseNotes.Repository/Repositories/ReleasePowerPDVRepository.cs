@@ -43,7 +43,18 @@ namespace ReleaseNotes.Repository.Repositories
             await Save();
             return module;
         }
+        public async Task<ModulePDV> UpdateModules(ModulePDV module)
+        {
+            var update = _context.Update(module);
+            update.State = EntityState.Modified;
+            await Save();
+            return module;
+        }
 
         public async Task<ReleasePDV> SelectByIdWithInclude(long id) => await _context.ReleasePDVs.Include(x => x.Modules).Where(y => y.ReleaseId == id).FirstOrDefaultAsync();
+        public async Task<ModulePDV> SelectModuleById(long id) => await _context.ModulePDVs.FirstOrDefaultAsync(x => x.ModuleId == id);
+        
+
+        
     }
 }

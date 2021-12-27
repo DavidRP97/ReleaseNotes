@@ -1,9 +1,8 @@
-﻿@model ReleaseNotes.Service.Models.PDV.ReleasePDVViewModel
+﻿@model ReleasePowerServerViewModel
 
 @{
     ViewData["Title"] = "Exclusão de Versão";
 }
-
 @if (User.IsInRole(@Role.SuperControleAdmin))
 {
     <h3>Deseja realmente excluir a versão:</h3>
@@ -33,11 +32,8 @@
         <form asp-action="Delete">
             <input type="hidden" asp-for="ReleaseId" />
             <input type="submit" value="Excluir" class="btn btn-danger" /> |
-            <a asp-action="IndexControlPainel" asp-controller="ReleasePDV" class="btn btn-warning">Voltar</a>
+            <a asp-action="IndexControlPainel" asp-controller="ReleasePowerServer" class="btn btn-warning">Voltar</a>
         </form>
     </div>
 }
-else
-{
-    <partial name="_Credential" />
-}
+

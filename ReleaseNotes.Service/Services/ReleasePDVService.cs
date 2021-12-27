@@ -9,7 +9,10 @@ namespace ReleaseNotes.Service.Services
     {
         private readonly HttpClient _httpClient;
         private const string BasePath = "api/v1/ReleasePDV";
+        private const string BasePathFindModule = "api/v1/ReleasePDV/Module";
         private const string BasePathModules = "api/v1/ReleasePDV/CreateModules";
+        private const string BasePathUpdateModules = "api/v1/ReleasePDV/UpdateModules";        
+       
          
 
         public ReleasePDVService(HttpClient httpClient)
@@ -57,6 +60,7 @@ namespace ReleaseNotes.Service.Services
             else throw new Exception("Something went wrong when calling API");
         }
 
+
         public async Task<ModulePDVViewModel> CreateModule(ModulePDVViewModel model, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -64,6 +68,22 @@ namespace ReleaseNotes.Service.Services
             if (response.IsSuccessStatusCode)
                 return await response.ReadContentAs<ModulePDVViewModel>();
             else throw new Exception("Somenthing wrong when calling API");
+        }
+
+        public async Task<ModulePDVViewModel> UpdateModule(ModulePDVViewModel model, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.PutAsJson(BasePathUpdateModules, model);
+            if (response.IsSuccessStatusCode)
+                return await response.ReadContentAs<ModulePDVViewModel>();
+            else throw new Exception("Something went wrong when calling API");
+        }
+
+        public async Task<ModulePDVViewModel> FindModuleById(long id, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.GetAsync($"{BasePathFindModule}/{id}");
+            return await response.ReadContentAs<ModulePDVViewModel>();
         }
     }
 }
