@@ -51,5 +51,18 @@ namespace ReleaseNotes.Repository.Repositories
             await Save();
             return module;
         }
+
+        public async Task<bool> DeleteModule(long id)
+        {
+            var entity = await SelectModuleById(id);
+
+            if (entity == null) return false;
+
+            _context.Remove(entity);
+
+            await Save();
+
+            return true;
+        }
     }
 }

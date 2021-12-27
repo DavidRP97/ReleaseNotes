@@ -25,6 +25,11 @@ namespace ReleaseNotes.Web.Controllers
             var releases = await _realesePowerServerService.FindAllReleases();
             return View(releases);
         }
+        public async Task<ActionResult> Details(long id)
+        {
+            var releases = await _realesePowerServerService.FindAllReleases();
+            return View(releases.Where(c => c.ReleaseId == id));
+        }
 
         [Authorize]
         [HttpPost]
@@ -99,6 +104,34 @@ namespace ReleaseNotes.Web.Controllers
         }
 
         [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> DeleteModule(int id)
+        {
+            var token = await HttpContext.GetTokenAsync("access_token");
+
+            var model = await _realesePowerServerService.DeleteModuleById(id, token);
+
+            if (model == true) return RedirectToAction(nameof(IndexControlPainel));
+            return NotFound();
+        }
+        public async Task<ActionResult> DeleteModule(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var token = await HttpContext.GetTokenAsync("access_token");
+            var obj = await _realesePowerServerService.FindModuleById(id.Value, token);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+
+        }
+
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult> IndexControlPainel(int? pagina)
         {
@@ -128,6 +161,26 @@ namespace ReleaseNotes.Web.Controllers
                 var response = await _realesePowerServerService.UpdateRelease(model, token);
                 if (response != null) return RedirectToAction(
                      nameof(IndexControlPainel));
+            }
+            return View(model);
+        }
+        public async Task<IActionResult> UpdateModules(int id)
+        {
+            var token = await HttpContext.GetTokenAsync("access_token");
+            var model = await _realesePowerServerService.FindModuleById(id, token);
+            if (model != null) return View(model);
+            return NotFound();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> UpdateModules(ModulePowerServerViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var token = await HttpContext.GetTokenAsync("access_token");
+                var response = await _realesePowerServerService.UpdateModule(model, token);
+                if (response != null) return RedirectToAction("Details", new { id = response.ReleaseId });
             }
             return View(model);
         }

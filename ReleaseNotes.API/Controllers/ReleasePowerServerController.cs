@@ -91,5 +91,13 @@ namespace ReleaseNotes.API.Controllers
             if (!status) return BadRequest();
             return Ok(status);
         }
+        [HttpDelete("Module/{id}")]
+        [Authorize]
+        public async Task<ActionResult<bool>> DeleteModule(long id)
+        {
+            var status = await _releasePowerServerRepository.DeleteModule(id);
+            if (!status) return BadRequest();
+            return Ok(status);
+        }
     }
 }

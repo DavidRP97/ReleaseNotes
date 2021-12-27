@@ -53,8 +53,18 @@ namespace ReleaseNotes.Repository.Repositories
 
         public async Task<ReleasePDV> SelectByIdWithInclude(long id) => await _context.ReleasePDVs.Include(x => x.Modules).Where(y => y.ReleaseId == id).FirstOrDefaultAsync();
         public async Task<ModulePDV> SelectModuleById(long id) => await _context.ModulePDVs.FirstOrDefaultAsync(x => x.ModuleId == id);
-        
 
-        
+        public async Task<bool> DeleteModule(long id)
+        {
+            var entity = await SelectModuleById(id);
+
+            if (entity == null) return false;
+
+            _context.Remove(entity);
+
+            await Save();
+
+            return true;
+        }
     }
 }

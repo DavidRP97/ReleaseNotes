@@ -9,6 +9,7 @@ namespace ReleaseNotes.Repository.Interfaces
         public Task<Module> InsertModule(Module module);
         public Task<Module> UpdateModules(Module module);
         public Task<bool> DeleteRange(long id);
+        public Task<bool> DeleteModule(long id);
         public Task<Release> SelectByIdWithInclude(long id);
         public Task<Module> SelectModuleById(long id);
         public Task<IEnumerable<Release>> GetAllIncludeModule();

@@ -34,16 +34,16 @@ namespace ReleaseNotes.Web.Controllers
         }
 
         [Authorize]
-        [HttpPost]
-        public async Task<ActionResult> Delete(int id)
+        [HttpGet]
+        public async Task<ActionResult> IndexControlPainel(int? pagina)
         {
-            var token = await HttpContext.GetTokenAsync("access_token");
+            const int PageItens = 10;
 
-            var model = await _releasePDVService.DeleteReleaseById(id, token);
+            int NumeroPagina = (pagina ?? 1);
 
-            if (model == true) return RedirectToAction(nameof(IndexControlPainel));
-            return NotFound();
-        }        
+            var releases = await _releasePDVService.FindAllReleases();
+            return View(releases.ToPagedList(NumeroPagina, PageItens));
+        }
 
         [Authorize]
         [HttpPost]
@@ -88,6 +88,28 @@ namespace ReleaseNotes.Web.Controllers
         {
             return View();
         }
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var token = await HttpContext.GetTokenAsync("access_token");
+
+            var model = await _releasePDVService.DeleteReleaseById(id, token);
+
+            if (model == true) return RedirectToAction(nameof(IndexControlPainel));
+            return NotFound();
+        }
+        [Authorize]
+        [HttpPost]
+        public async Task<ActionResult> DeleteModule(int id)
+        {
+            var token = await HttpContext.GetTokenAsync("access_token");
+
+            var model = await _releasePDVService.DeleteModuleById(id, token);
+
+            if (model == true) return RedirectToAction(nameof(IndexControlPainel));
+            return NotFound();
+        }
         public async Task<ActionResult> Delete(long? id)
         {
             if (id == null)
@@ -104,17 +126,21 @@ namespace ReleaseNotes.Web.Controllers
             return View(obj);
 
         }
-
-        [Authorize]
-        [HttpGet]
-        public async Task<ActionResult> IndexControlPainel(int? pagina)
+        public async Task<ActionResult> DeleteModule(long? id)
         {
-            const int PageItens = 10;
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var token = await HttpContext.GetTokenAsync("access_token");
+            var obj = await _releasePDVService.FindModuleById(id.Value, token);
+            if (obj == null)
+            {
+                return NotFound();
+            }
 
-            int NumeroPagina = (pagina ?? 1);
+            return View(obj);
 
-            var releases = await _releasePDVService.FindAllReleases();
-            return View(releases.ToPagedList(NumeroPagina, PageItens));
         }
 
         public async Task<IActionResult> Update(int id)

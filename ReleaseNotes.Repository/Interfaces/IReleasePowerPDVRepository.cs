@@ -11,6 +11,7 @@ namespace ReleaseNotes.Repository.Interfaces
         public Task<ReleasePDV> SelectByIdWithInclude(long id);
         public Task<ModulePDV> SelectModuleById(long id);
         public Task<bool> DeleteRange(long id);
+        public Task<bool> DeleteModule(long id);
         public Task<IEnumerable<ReleasePDV>> GetAllIncludeModule();
     }
 }

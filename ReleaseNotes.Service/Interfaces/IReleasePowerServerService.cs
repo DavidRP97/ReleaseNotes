@@ -12,5 +12,6 @@ namespace ReleaseNotes.Service.Interfaces
         Task<ReleasePowerServerViewModel> UpdateRelease(ReleasePowerServerViewModel model, string token);
         Task<ModulePowerServerViewModel> UpdateModule(ModulePowerServerViewModel model, string token);
         Task<bool> DeleteReleaseById(long id, string token);
+        Task<bool> DeleteModuleById(long id, string token);
     }
 }

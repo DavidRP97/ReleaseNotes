@@ -79,5 +79,14 @@ namespace ReleaseNotes.Service.Services
             var response = await _httpClient.GetAsync($"{BasePathFindModule}/{id}");
             return await response.ReadContentAs<ModulePowerServerViewModel>();
         }
+
+        public async Task<bool> DeleteModuleById(long id, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.DeleteAsync($"{BasePathFindModule}/{id}");
+            if (response.IsSuccessStatusCode)
+                return await response.ReadContentAs<bool>();
+            else throw new Exception("Something went wrong when calling API");
+        }
     }
 }

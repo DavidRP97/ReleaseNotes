@@ -12,5 +12,6 @@ namespace ReleaseNotes.Service.Interfaces
         Task<ReleasePDVViewModel> UpdateRelease(ReleasePDVViewModel model, string token);
         Task<ModulePDVViewModel> UpdateModule(ModulePDVViewModel model, string token);
         Task<bool> DeleteReleaseById(long id, string token);
+        Task<bool> DeleteModuleById(long id, string token);
     }
 }

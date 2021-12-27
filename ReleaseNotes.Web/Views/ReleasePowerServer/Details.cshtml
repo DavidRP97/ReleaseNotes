@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ReleasePDVViewModel>
+﻿@model IEnumerable<ReleasePowerServerViewModel>
 @{
     ViewData["Title"] = "Detalhes da Versão";
 }
@@ -15,10 +15,10 @@
                     <strong style="position: center;">@module.ModuleName (@module.Title)</strong>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a asp-action="DeleteModule" asp-controller="ReleasePDV" asp-route-id="@module.ModuleId" class="btn btn-danger" style="position: center; float: right; margin: 0 5px">
+                        <a asp-action="DeleteModule" asp-controller="ReleasePowerServer" asp-route-id="@module.ModuleId" class="btn btn-danger" style="position: center; float: right; margin: 0 5px">
                             Excluir
                         </a>
-                        <a asp-action="UpdateModules" asp-controller="ReleasePDV" asp-route-id="@module.ModuleId" class="btn btn-primary" style="position: center; float: right; margin: 0 5px">
+                        <a asp-action="UpdateModules" asp-controller="ReleasePowerServer" asp-route-id="@module.ModuleId" class="btn btn-primary" style="position: center; float: right; margin: 0 5px">
                             Editar
                         </a>
                     }
