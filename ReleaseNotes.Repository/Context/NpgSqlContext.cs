@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using ReleaseNotes.Entities.Model.Consts;
+using ReleaseNotes.Entities.Model.Feedback;
 using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
 using ReleaseNotes.Entities.Model.ReleasesPowerServer;
 
@@ -20,6 +21,10 @@ namespace ReleaseNotes.Repository.Context
         //POWERSERVER
         public DbSet<Module> Modules { get; set; }
         public DbSet<Release> Releases { get; set; }
+
+        //FEEDBACK
+        public DbSet<ReleasesFeedback> Feedbacks { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

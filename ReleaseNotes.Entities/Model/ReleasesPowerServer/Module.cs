@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ReleaseNotes.Entities.Model.Feedback;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReleaseNotes.Entities.Model.ReleasesPowerServer
@@ -18,5 +19,6 @@ namespace ReleaseNotes.Entities.Model.ReleasesPowerServer
         [ForeignKey("ReleaseId")]
         public virtual Release? Release { get; set; }
         public long ReleaseId { get; set; }
+        public IEnumerable<ReleasesFeedback>? Feedbacks { get; set; }
     }
 }

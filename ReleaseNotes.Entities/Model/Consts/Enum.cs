@@ -6,4 +6,9 @@
         ANALISE,
         REPROVADO
     }
+    public enum FeedbackFrom
+    {
+        PDV,
+        PowerServer
+    }
 }
