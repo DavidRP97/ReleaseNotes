@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ReleaseNotes.API.Utils;
 using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
+using ReleaseNotes.Repository.DTO;
 using ReleaseNotes.Repository.Interfaces;
 
 namespace ReleaseNotes.API.Controllers
@@ -30,7 +31,7 @@ namespace ReleaseNotes.API.Controllers
             return Ok(release);
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReleasePDV>>> GetAll()
+        public async Task<ActionResult<IEnumerable<ReleaseDto>>> GetAll()
         {
             var releases = await _releasePowerPDVRepository.GetAllIncludeModule();
             return Ok(releases);
@@ -38,7 +39,7 @@ namespace ReleaseNotes.API.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<ActionResult<ReleasePDV>> Create([FromBody] ReleasePDV release)
+        public async Task<ActionResult<ReleasePDV>> Create([FromBody] ReleaseDto release)
         {
             if (release == null) return NotFound();
 
@@ -48,7 +49,7 @@ namespace ReleaseNotes.API.Controllers
 
         [HttpPost("CreateModules")]
         [Authorize]
-        public async Task<ActionResult<ModulePDV>> Create([FromBody] ModulePDV module)
+        public async Task<ActionResult<ModuleDto>> Create([FromBody] ModuleDto module)
         {
             if (module == null) return NotFound();
 
@@ -57,15 +58,15 @@ namespace ReleaseNotes.API.Controllers
         }
         [HttpPut]
         [Authorize]
-        public async Task<ActionResult<ReleasePDV>> Update([FromBody] ReleasePDV release)
+        public async Task<ActionResult<ReleaseDto>> Update([FromBody] ReleaseDto release)
         {
             if (release == null) return NotFound();
-            var addRelease = await _releasePowerPDVRepository.Update(release);
+            var addRelease = await _releasePowerPDVRepository.UpdateReleases(release);
             return Ok(addRelease);
         }
         [HttpPut("UpdateModules")]
         [Authorize]
-        public async Task<ActionResult<ModulePDV>> Update([FromBody] ModulePDV module)
+        public async Task<ActionResult<ModuleDto>> Update([FromBody] ModuleDto module)
         {
             if (module == null) return NotFound();
             var addRelease = await _releasePowerPDVRepository.UpdateModules(module);

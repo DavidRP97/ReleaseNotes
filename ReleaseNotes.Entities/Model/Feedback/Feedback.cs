@@ -14,7 +14,7 @@ namespace ReleaseNotes.Entities.Model.Feedback
         public string? Username { get; set; }
         public string? Email { get; set; }
         [StringLength(300)]
-        public string Details { get; set; }
+        public string? Details { get; set; }
         [Required]
         public bool FeedbackPositive { get; set; }
         public long? ModulePowerServerId { get; set; }
@@ -22,6 +22,6 @@ namespace ReleaseNotes.Entities.Model.Feedback
         [ForeignKey("ModulePdvId")]
         public ModulePDV? ModulePDV { get; set; }
         [ForeignKey("ModulePowerServerId")]
-        public Module? ModulePowerServer { get; set; }
+        public ModulePowerServer? ModulePowerServer { get; set; }
     }
 }

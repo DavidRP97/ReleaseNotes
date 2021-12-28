@@ -2,7 +2,7 @@
 using ReleaseNotes.Repository.Interfaces;
 using ReleaseNotes.Repository.Repositories;
 
-namespace ReleaseNotes.IoC.Config.Repository
+namespace ReleaseNotes.IoC.Config
 {
     public static class DependencyInjectionConfigRepository
     {

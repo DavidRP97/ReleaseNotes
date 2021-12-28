@@ -2,7 +2,7 @@
 
 namespace ReleaseNotes.Entities.Model.ReleasesPowerServer
 {
-    public class Release
+    public class ReleasePowerServer
     {
         [Key]
         public long ReleaseId { get; set; }
@@ -10,6 +10,6 @@ namespace ReleaseNotes.Entities.Model.ReleasesPowerServer
         public string VersionNumber { get; set; }
         [Required]
         public string VersionDate { get; set; }
-        public IEnumerable<Module>? Modules { get; set; }
+        public IEnumerable<ModulePowerServer>? Modules { get; set; }
     }
 }

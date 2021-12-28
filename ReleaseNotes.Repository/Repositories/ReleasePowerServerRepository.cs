@@ -1,23 +1,29 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
 using ReleaseNotes.Entities.Model.ReleasesPowerServer;
 using ReleaseNotes.Repository.Context;
+using ReleaseNotes.Repository.DTO;
 using ReleaseNotes.Repository.Interfaces;
 
 namespace ReleaseNotes.Repository.Repositories
 {
-    public class ReleasePowerServerRepository : GenericRepository<Release>, IReleasePowerServerRepository
+    public class ReleasePowerServerRepository : GenericRepository<ReleasePowerServer>, IReleasePowerServerRepository
     {
         private readonly NpgSqlContext _context;
-        public ReleasePowerServerRepository(NpgSqlContext context) : base(context)
+        private IMapper _mapper;
+        public ReleasePowerServerRepository(NpgSqlContext context, IMapper mapper) : base(context)
         {
             _context = context;
+            _mapper = mapper;   
         }
 
-        public async Task<Release> InsertRelease(Release release)
+        public async Task<ReleaseDto> InsertRelease(ReleaseDto release)
         {
-            await _context.Releases.AddRangeAsync(release);
+            ReleasePowerServer releasePowerSever = _mapper.Map<ReleasePowerServer>(release);
+            await _context.AddAsync(releasePowerSever);
             await Save();
-            return release;
+            return _mapper.Map<ReleaseDto>(releasePowerSever);
         }
 
         public async Task<bool> DeleteRange(long id)
@@ -31,25 +37,51 @@ namespace ReleaseNotes.Repository.Repositories
             return true;
         }
 
-        public async Task<IEnumerable<Release>> GetAllIncludeModule()
+        public async Task<IEnumerable<ReleaseDto>> GetAllIncludeModule()
         {
-            return await _context.Releases.Include(x => x.Modules).ToListAsync();
+            List<ReleasePowerServer> releases = await _context.Releases.Include(x => x.Modules).ToListAsync();
+
+            return _mapper.Map<List<ReleaseDto>>(releases);
         }
 
-        public async Task<Release> SelectByIdWithInclude(long id) => await _context.Releases.Include(x => x.Modules).Where(y => y.ReleaseId == id).FirstOrDefaultAsync();
-        public async Task<Module> SelectModuleById(long id) => await _context.Modules.FirstOrDefaultAsync(x => x.ModuleId == id);
-        public async Task<Module> InsertModule(Module module)
+        public async Task<ReleaseDto> SelectByIdWithInclude(long id)
         {
-            await _context.AddAsync(module);
-            await Save();
-            return module;
+            ReleasePowerServer release = await _context.Releases.Include(x => x.Modules).Where(y => y.ReleaseId == id).FirstOrDefaultAsync();
+
+            return _mapper.Map<ReleaseDto>(release);
         }
-        public async Task<Module> UpdateModules(Module module)
+        public async Task<ModuleDto> SelectModuleById(long id)
         {
-            var update = _context.Update(module);
-            update.State = EntityState.Modified;
+            ModulePowerServer module = await _context.Modules.FirstOrDefaultAsync(x => x.ModuleId == id);
+
+            return _mapper.Map<ModuleDto>(module);
+        }
+        public async Task<ModuleDto> InsertModule(ModuleDto module)
+        {
+            ModulePowerServer modulePowerServer = _mapper.Map<ModulePowerServer>(module);
+            await _context.AddAsync(modulePowerServer);
             await Save();
-            return module;
+            return _mapper.Map<ModuleDto>(modulePowerServer);
+        }
+        public async Task<ModuleDto> UpdateModules(ModuleDto module)
+        {
+
+            ModulePowerServer modulePowerServer = _mapper.Map<ModulePowerServer>(module);
+
+            _context.Update(modulePowerServer);
+            await Save();
+
+            return _mapper.Map<ModuleDto>(modulePowerServer);
+        }
+        public async Task<ReleaseDto> UpdateReleases(ReleaseDto release)
+        {
+
+            ReleasePowerServer releasePowerServer = _mapper.Map<ReleasePowerServer>(release);
+
+            _context.Update(releasePowerServer);
+            await Save();
+
+            return _mapper.Map<ReleaseDto>(releasePowerServer);
         }
 
         public async Task<bool> DeleteModule(long id)

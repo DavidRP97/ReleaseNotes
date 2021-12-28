@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
 using ReleaseNotes.Repository.Context;
+using ReleaseNotes.Repository.DTO;
 using ReleaseNotes.Repository.Interfaces;
 
 namespace ReleaseNotes.Repository.Repositories
@@ -8,9 +10,11 @@ namespace ReleaseNotes.Repository.Repositories
     public class ReleasePowerPDVRepository : GenericRepository<ReleasePDV>, IReleasePowerPDVRepository
     {
         private readonly NpgSqlContext _context;
-        public ReleasePowerPDVRepository(NpgSqlContext context) : base(context)
+        private IMapper _mapper;
+        public ReleasePowerPDVRepository(NpgSqlContext context, IMapper mapper) : base(context)
         {
             _context = context; 
+            _mapper = mapper;   
         }
 
         public async Task<bool> DeleteRange(long id)
@@ -26,33 +30,58 @@ namespace ReleaseNotes.Repository.Repositories
             return true;
         }
 
-        public async Task<IEnumerable<ReleasePDV>> GetAllIncludeModule()
+        public async Task<IEnumerable<ReleaseDto>> GetAllIncludeModule()
         {
-            return await _context.ReleasePDVs.Include(x => x.Modules).ToListAsync();
+            List<ReleasePDV> releases = await _context.ReleasePDVs.Include(x => x.Modules).ToListAsync();
+
+            return _mapper.Map<List<ReleaseDto>>(releases);
         }
 
-        public async Task<ReleasePDV> InsertRelease(ReleasePDV release)
+        public async Task<ReleaseDto> InsertRelease(ReleaseDto release)
         {
-            await _context.AddAsync(release);
+            ReleasePDV releasePDV = _mapper.Map<ReleasePDV>(release);  
+            await _context.AddAsync(releasePDV);
             await Save();
-            return release;
+            return _mapper.Map<ReleaseDto>(releasePDV);
         }
-        public async Task<ModulePDV> InsertModule(ModulePDV module)
+        public async Task<ModuleDto> InsertModule(ModuleDto module)
         {
-            await _context.AddAsync(module);
+            ModulePDV modulePDV = _mapper.Map<ModulePDV>(module);
+            await _context.AddAsync(modulePDV);
             await Save();
-            return module;
+            return _mapper.Map<ModuleDto>(modulePDV);
         }
-        public async Task<ModulePDV> UpdateModules(ModulePDV module)
+        public async Task<ModuleDto> UpdateModules(ModuleDto module)
         {
-            var update = _context.Update(module);
-            update.State = EntityState.Modified;
+            ModulePDV modulePDV = _mapper.Map<ModulePDV>(module);
+
+            _context.Update(modulePDV);
             await Save();
-            return module;
+
+            return _mapper.Map<ModuleDto>(modulePDV);
+        }
+        public async Task<ReleaseDto> UpdateReleases(ReleaseDto release)
+        {
+            ReleasePDV releasePdv = _mapper.Map<ReleasePDV>(release);
+
+            _context.Update(releasePdv);
+            await Save();
+
+            return _mapper.Map<ReleaseDto>(releasePdv);
         }
 
-        public async Task<ReleasePDV> SelectByIdWithInclude(long id) => await _context.ReleasePDVs.Include(x => x.Modules).Where(y => y.ReleaseId == id).FirstOrDefaultAsync();
-        public async Task<ModulePDV> SelectModuleById(long id) => await _context.ModulePDVs.FirstOrDefaultAsync(x => x.ModuleId == id);
+        public async Task<ReleaseDto> SelectByIdWithInclude(long id)
+        {
+            ReleasePDV releasePDV = await _context.ReleasePDVs.Include(x => x.Modules).Where(y => y.ReleaseId == id).FirstOrDefaultAsync();
+
+            return _mapper.Map<ReleaseDto>(releasePDV);
+        } 
+        public async Task<ModuleDto> SelectModuleById(long id)
+        {
+            ModulePDV modulePDV = await _context.ModulePDVs.FirstOrDefaultAsync(x => x.ModuleId == id);
+
+            return _mapper.Map<ModuleDto>(modulePDV);
+        }
 
         public async Task<bool> DeleteModule(long id)
         {

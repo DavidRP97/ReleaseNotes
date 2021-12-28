@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using ReleaseNotes.API.Utils;
 using ReleaseNotes.Entities.Model.ReleasesPowerServer;
+using ReleaseNotes.Repository.DTO;
 using ReleaseNotes.Repository.Interfaces;
 using System.Net;
 
@@ -31,14 +32,14 @@ namespace ReleaseNotes.API.Controllers
             return Ok(release);
         }
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Release>>> GetAll()
+        public async Task<ActionResult<IEnumerable<ReleaseDto>>> GetAll()
         {
             var releases = await _releasePowerServerRepository.GetAllIncludeModule();
             return Ok(releases);
         }
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<Release>> Create([FromBody] Release release)
+        public async Task<ActionResult<ReleaseDto>> Create([FromBody] ReleaseDto release)
         {
             try
             {
@@ -60,7 +61,7 @@ namespace ReleaseNotes.API.Controllers
         }
         [HttpPost("CreateModules")]
         [Authorize]
-        public async Task<ActionResult<Module>> Create([FromBody] Module module)
+        public async Task<ActionResult<ModuleDto>> Create([FromBody] ModuleDto module)
         {
             if (module == null) return NotFound();
 
@@ -69,15 +70,15 @@ namespace ReleaseNotes.API.Controllers
         }
         [HttpPut]
         [Authorize]
-        public async Task<ActionResult<Release>> Update([FromBody] Release release)
+        public async Task<ActionResult<ReleaseDto>> Update([FromBody] ReleaseDto release)
         {
             if (release == null) return NotFound();
-            var addRelease = await _releasePowerServerRepository.Update(release);
+            var addRelease = await _releasePowerServerRepository.UpdateReleases(release);
             return Ok(addRelease);
         }
         [HttpPut("UpdateModules")]
         [Authorize]
-        public async Task<ActionResult<Module>> Update([FromBody] Module module)
+        public async Task<ActionResult<ModuleDto>> Update([FromBody] ModuleDto module)
         {
             if (module == null) return NotFound();
             var addRelease = await _releasePowerServerRepository.UpdateModules(module);

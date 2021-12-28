@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication;
+using ReleaseNotes.IoC.Config;
 using ReleaseNotes.Service.Interfaces;
 using ReleaseNotes.Service.Services;
 using System.Text;
@@ -8,13 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddHttpClient<IReleasePowerServerService, ReleasePowerServerService>(c =>
-                c.BaseAddress = new Uri(builder.Configuration["ServiceUrls:ReleasePowerServer"])
-            );
-builder.Services.AddHttpClient<IReleasePDVService, ReleasePDVService>(c =>
-                c.BaseAddress = new Uri(builder.Configuration["ServiceUrls:ReleasePDV"])
-
-            );
+builder.Services.ConfigDIService();
 
 builder.Services.AddAuthentication(options =>
 {

@@ -19,6 +19,6 @@ namespace ReleaseNotes.Entities.Model.ReleasesPowerPDV
         [ForeignKey("ReleaseId")]
         public virtual ReleasePDV? Release { get; set; }
         public long ReleaseId { get; set; }
-        public IEnumerable<ReleasesFeedback> Feedbacks { get; set; }
+        public IEnumerable<ReleasesFeedback>? Feedbacks { get; set; }
     }
 }

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ReleaseNotes.Entities.Model.Feedback;
+using ReleaseNotes.Repository.DTO;
 using ReleaseNotes.Repository.Interfaces;
 
 namespace ReleaseNotes.API.Controllers
@@ -13,11 +15,20 @@ namespace ReleaseNotes.API.Controllers
         {
             _feedbackRepository = feedbackRepository ?? throw new ArgumentNullException(nameof(feedbackRepository));
         }
+        [HttpPost]
+        public async Task<IActionResult> CreateFeedback([FromBody] FeedbackDto feedback)
+        {
+            if (feedback == null) return BadRequest();
+
+            var addFeedback = await _feedbackRepository.InsertFeedback(feedback);
+
+            return Ok(addFeedback); 
+        }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ReleasesFeedback>>> GetAll()
+        public async Task<ActionResult<IEnumerable<FeedbackDto>>> GetAll()
         {
-            return Ok(await _feedbackRepository.GetAll());
+            return Ok(await _feedbackRepository.GetAllFeedbacks());
         }
 
         [HttpGet("NegativesPDV")]

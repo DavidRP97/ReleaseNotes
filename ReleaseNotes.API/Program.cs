@@ -1,9 +1,11 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using ReleaseNotes.IoC.Config.Repository;
+using ReleaseNotes.API.MapperConfig;
+using ReleaseNotes.IoC.Config;
 using ReleaseNotes.Repository.Context;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -14,6 +16,11 @@ var builder = WebApplication.CreateBuilder(args);
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<NpgSqlContext>(options => options.UseNpgsql(connection));
+
+IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddAuthentication("Bearer")
                 .AddJwtBearer("Bearer", options =>

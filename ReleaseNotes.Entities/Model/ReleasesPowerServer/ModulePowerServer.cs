@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ReleaseNotes.Entities.Model.ReleasesPowerServer
 {
-    public class Module
+    public class ModulePowerServer
     {
         [Key]
         public long ModuleId { get; set; }
@@ -17,7 +17,7 @@ namespace ReleaseNotes.Entities.Model.ReleasesPowerServer
         [Required]
         public string Notes { get; set; }
         [ForeignKey("ReleaseId")]
-        public virtual Release? Release { get; set; }
+        public virtual ReleasePowerServer? Release { get; set; }
         public long ReleaseId { get; set; }
         public IEnumerable<ReleasesFeedback>? Feedbacks { get; set; }
     }
