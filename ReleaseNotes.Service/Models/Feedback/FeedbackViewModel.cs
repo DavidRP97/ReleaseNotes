@@ -1,8 +1,8 @@
-﻿using ReleaseNotes.Entities.Model.Consts;
+﻿using ReleaseNotes.Service.Utils;
 
-namespace ReleaseNotes.Repository.DTO
+namespace ReleaseNotes.Service.Models.Feedback
 {
-    public class FeedbackDto
+    public class FeedbackViewModel
     {
         public long FeedbackId { get; set; }
         public string? FeedbackDate { get; set; }
@@ -13,5 +13,9 @@ namespace ReleaseNotes.Repository.DTO
         public bool FeedbackPositive { get; set; }
         public long? ModulePowerServerId { get; set; }
         public long? ModulePdvId { get; set; }
+        public DateTime? Data
+        {
+            get { return Convert.ToDateTime(FeedbackDate); }
+        }
     }
 }

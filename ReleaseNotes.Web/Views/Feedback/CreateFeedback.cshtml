@@ -1,0 +1,36 @@
+﻿@model FeedbackViewModel
+
+@{
+    string Email = User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(x => x.Type == "email").Value : string.Empty;
+}
+
+<div class="col-lg-6">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title">
+                <h3 class="text-center title-2">Observações</h3>
+            </div>
+            <hr>
+            <form asp-action="CreateFeedback">
+                <input asp-for="Email" value="@Email" hidden>
+                <input asp-for="Username" value="@User.Identity.Name" hidden>
+                <input asp-for="FeedbackFrom" value="@ViewBag.From" hidden>
+                <input asp-for="ModulePdvId" value="@ViewBag.PdvId" hidden>
+                <input asp-for="ModulePowerServerId" value="@ViewBag.PowerServerId" hidden>                
+                <div class="row">
+                    <div class="form-group">
+                        <textarea asp-for="Details" id="textarea-input" rows="6" placeholder="Descrição..." class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            Enviar Feedback
+                        </button>
+                        <a asp-action="Index" asp-controller="Feedback" class="btn btn-warning btn-sm">Voltar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

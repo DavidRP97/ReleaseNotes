@@ -10,8 +10,4 @@
     <PackageReference Include="RestSharp" Version="106.15.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ReleaseNotes.Entities\ReleaseNotes.Entities.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -54,6 +54,7 @@ namespace ReleaseNotes.Web.Controllers
             {
                 var token = await HttpContext.GetTokenAsync("access_token");
                 var response = await _releasePDVService.CreateRelease(model, token);
+
                 TempData["ID"] = JsonSerializer.Serialize(response.ReleaseId);
 
                 return RedirectToAction(nameof(CreateModules));

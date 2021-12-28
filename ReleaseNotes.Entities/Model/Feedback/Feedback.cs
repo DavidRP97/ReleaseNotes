@@ -10,6 +10,7 @@ namespace ReleaseNotes.Entities.Model.Feedback
     {
         [Key]
         public long FeedbackId { get; set; }
+        public string? FeedbackDate { get; set; }
         public FeedbackFrom FeedbackFrom { get; set; }
         public string? Username { get; set; }
         public string? Email { get; set; }

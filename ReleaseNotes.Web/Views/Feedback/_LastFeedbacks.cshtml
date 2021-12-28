@@ -1,0 +1,63 @@
+﻿@model X.PagedList.IPagedList<FeedbackViewModel>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">Últimos Feedbacks</h3>
+        <div class="table-responsive table-responsive-data2">
+            <table class="table table-data2">
+                <thead>
+                    <tr>
+                        <th>Cliente</th>
+                        <th>Email</th>
+                        <th>Detalhes</th>
+                        <th>Data</th>
+                        <th>Status</th>
+                        <th>Software</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var feed in Model)
+                    {                        
+                        <tr class="tr-shadow">
+                            <td>@feed.Username</td>
+                            <td>@feed.Email</td>
+                            <td>@feed.Details</td>
+                            <td>@feed.Data</td>
+                            @if (@feed.FeedbackPositive)
+                            {
+                                <td>
+                                    <span class="status--process">Positivo</span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <span class="status--denied">Negativo</span>
+                                </td>
+                            }
+                            @if (@feed.FeedbackFrom == FeedbackFrom.PDV)
+                            {
+                                <td>@Consts.PDV</td>
+                            }
+                            @if (@feed.FeedbackFrom == FeedbackFrom.PowerServer)
+                            {
+                                <td>@Consts.PowerServer</td>
+                            }
+                        </tr>
+                        <tr class="spacer"></tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+        <!-- END DATA TABLE -->
+    </div>
+</div>
+@Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }), new PagedListRenderOptions
+{
+	LiElementClasses = new[] { "page-item" },
+	PageClasses = new[] { "page-link" },
+})

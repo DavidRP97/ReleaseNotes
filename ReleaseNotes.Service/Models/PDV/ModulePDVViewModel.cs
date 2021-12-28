@@ -1,4 +1,6 @@
-﻿namespace ReleaseNotes.Service.Models.PDV
+﻿using ReleaseNotes.Service.Models.Feedback;
+
+namespace ReleaseNotes.Service.Models.PDV
 {
     public class ModulePDVViewModel
     {
@@ -7,5 +9,6 @@
         public string Title { get; set; }
         public string Notes { get; set; }
         public long ReleaseId { get; set; }
+        public IEnumerable<FeedbackViewModel>? Feedbacks { get; set; }
     }
 }

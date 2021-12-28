@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using ReleaseNotes.Entities.Model.Feedback;
+﻿using Microsoft.AspNetCore.Mvc;
 using ReleaseNotes.Repository.DTO;
 using ReleaseNotes.Repository.Interfaces;
 
@@ -30,17 +28,5 @@ namespace ReleaseNotes.API.Controllers
         {
             return Ok(await _feedbackRepository.GetAllFeedbacks());
         }
-
-        [HttpGet("NegativesPDV")]
-        public async Task<ActionResult<int>> NegativesFeedbackPDV() => await _feedbackRepository.FeedbacksNegativesPDV();
-
-        [HttpGet("NegativesPowerServer")]
-        public async Task<ActionResult<int>> NegativesFeedbackPowerServer() => await _feedbackRepository.FeedbacksNegativesPowerServer();
-
-        [HttpGet("PositivesPDV")]
-        public async Task<ActionResult<int>> PositivesFeedbackPDV() => await _feedbackRepository.FeedbacksPositivesPDV();
-
-        [HttpGet("PositivesPowerServer")]
-        public async Task<ActionResult<int>> PositivesFeedbackPowerServer() => await _feedbackRepository.FeedbacksPositivesPowerServer();
     }
 }
