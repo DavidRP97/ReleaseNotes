@@ -73,7 +73,7 @@ namespace ReleaseNotes.Service.Services
             else throw new Exception("Something went wrong when calling API");
         }
 
-        public async Task<ModulePowerServerViewModel> FindModuleById(long id, string token)
+        public async Task<ModulePowerServerViewModel> FindModuleById(long? id, string token)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             var response = await _httpClient.GetAsync($"{BasePathFindModule}/{id}");

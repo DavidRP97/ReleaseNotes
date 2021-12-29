@@ -11,6 +11,8 @@ namespace ReleaseNotes.Service.Models.Feedback
         public string? Email { get; set; }
         public string? Details { get; set; }
         public bool FeedbackPositive { get; set; }
+        public bool OpenCall { get; set; }
+        public long? CallId { get; set; }
         public long? ModulePowerServerId { get; set; }
         public long? ModulePdvId { get; set; }
         public DateTime? Data

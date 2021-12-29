@@ -85,11 +85,11 @@ namespace ReleaseNotes.Repository.Repositories
 
         public async Task<bool> DeleteModule(long id)
         {
-            var entity = await SelectModuleById(id);
+            ModulePDV modulePDV = await _context.ModulePDVs.Include(y => y.Feedbacks).Where(x=>x.ModuleId == id).FirstOrDefaultAsync();
 
-            if (entity == null) return false;
+            if (modulePDV == null) return false;
 
-            _context.Remove(entity);
+            _context.RemoveRange(modulePDV);
 
             await Save();
 

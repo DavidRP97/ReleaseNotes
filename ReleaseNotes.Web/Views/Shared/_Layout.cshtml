@@ -73,7 +73,14 @@
                                 <i class="fas fa-bars"></i> Manuais
                             </a>
                         </li>
-
+                        @if (User.IsInRole(@Role.Client))
+                        {
+                            <li>
+                                <a asp-action="Index" asp-controller="Feedback">
+                                    <i class="fas fa-rss"></i> Feedbacks
+                                </a>
+                            </li>
+                        }
                         @if (User.IsInRole("SuperControleAdmin"))
                         {
                             <li>
@@ -125,7 +132,15 @@
                                 <i class="fas fa-bars"></i> Manuais
                             </a>
                         </li>
-                        @if (User.IsInRole("SuperControleAdmin"))
+                        @if (User.IsInRole(@Role.Client))
+                        {
+                            <li>
+                                <a asp-action="Index" asp-controller="Feedback">
+                                    <i class="fas fa-rss"></i> Feedbacks
+                                </a>
+                            </li>
+                        }
+                        @if (User.IsInRole(@Role.SuperControleAdmin))
                         {
                             <li>
                                 <a asp-action="Index" asp-controller="Feedback">

@@ -85,7 +85,7 @@ namespace ReleaseNotes.API.Controllers
             return Ok(addRelease);
         }
         [HttpDelete("{id}")]
-        [Authorize]
+        
         public async Task<ActionResult> Delete(long id)
         {
             var status = await _releasePowerServerRepository.DeleteRange(id);
@@ -93,7 +93,7 @@ namespace ReleaseNotes.API.Controllers
             return Ok(status);
         }
         [HttpDelete("Module/{id}")]
-        [Authorize]
+        
         public async Task<ActionResult<bool>> DeleteModule(long id)
         {
             var status = await _releasePowerServerRepository.DeleteModule(id);

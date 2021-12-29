@@ -1,0 +1,52 @@
+﻿@model FeedbackViewModel
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Data:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Data)
+        </dd>
+        <dt class="col-sm-2">
+            Software:
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.From
+        </dd>
+        <dt class="col-sm-2">
+            Detalhes do Feedback:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Details)
+        </dd>
+        <dt class="col-sm-2">
+            Versão do Software:
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.VersionNumber
+        </dd>
+        <dt class="col-sm-2">
+            Módulo:
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.ModuleName
+        </dd>
+        <dt class="col-sm-2">
+            Titulo da Nota:
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Title
+        </dd>
+        <dt class="col-sm-2">
+            Detalhes da Nota de Versão:
+        </dt>
+        <dd class="col-sm-10">
+            @ViewBag.Description
+        </dd>
+    </dl>
+</div>
+<div class="form-group">
+    <a asp-action="Index" asp-controller="Feedback" class="btn btn-warning btn-sm">Voltar</a>
+</div>

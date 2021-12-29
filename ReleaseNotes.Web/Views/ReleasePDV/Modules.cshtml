@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<ReleasePDVViewModel>
 @{
     ViewData["Title"] = "Detalhes da Versão";
+    string Email = User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(x => x.Type == "email").Value : string.Empty;
 }
 
 @foreach (var item in Model)
@@ -10,15 +11,22 @@
         {
 
             <div class="card-header">
-                <strong style="position: center;">@module.ModuleName (@module.Title)</strong> 
+                <strong style="position: center;">@module.ModuleName (@module.Title)</strong>
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <button type="button" class="btn btn-danger" style="position: center; float: right; margin: 0 5px">
-                        <i class="fa fa-thumbs-down"></i>&nbsp; 
-                    </button>
-                    <a asp-action="CreateFeedbackPositivePdv" asp-controller="Feedback" asp-route-id="@module.ModuleId" type="button" class="btn btn-primary" style="position: center; float: right; margin: 0 5px">
-                        <i class="fa fa-thumbs-up"></i>&nbsp;
-                    </a>                    
+                    @if (module.Feedbacks.Count() > 0)
+                    {
+                        <label style="position: center; float: right; margin: 0 5px">Feedback Enviado!</label>
+                    }
+                    else
+                    {
+                        <a asp-action="CreateFeedbackNegativePdv" asp-controller="Feedback" asp-route-id="@module.ModuleId" type="button" class="btn btn-danger" style="position: center; float: right; margin: 0 5px">
+                            <i class="fa fa-thumbs-down"></i>&nbsp;
+                        </a>
+                        <a asp-action="CreateFeedbackPositivePdv" asp-controller="Feedback" asp-route-id="@module.ModuleId" type="button" class="btn btn-primary" style="position: center; float: right; margin: 0 5px">
+                            <i class="fa fa-thumbs-up"></i>&nbsp;
+                        </a>
+                    }
                 }
             </div>
             <div class="card-body card-block">

@@ -14,17 +14,9 @@ namespace ReleaseNotes.Repository.Repositories
         private IMapper _mapper;
         public FeedbackRepository(NpgSqlContext context, IMapper mapper) : base(context)
         {
-            _context = context; 
-            _mapper = mapper;   
+            _context = context;
+            _mapper = mapper;
         }
-
-        public async Task<int> FeedbacksNegativesPDV() => _context.Feedbacks.Where(x => x.FeedbackPositive != true && x.FeedbackFrom == FeedbackFrom.PDV).Count();
-
-        public async Task<int> FeedbacksNegativesPowerServer() => _context.Feedbacks.Where(x => x.FeedbackPositive != true && x.FeedbackFrom == FeedbackFrom.PowerServer).Count();
-
-        public async Task<int> FeedbacksPositivesPDV() => _context.Feedbacks.Where(x => x.FeedbackPositive == true && x.FeedbackFrom == FeedbackFrom.PDV).Count();
-
-        public async Task<int> FeedbacksPositivesPowerServer() => _context.Feedbacks.Where(x => x.FeedbackPositive == true && x.FeedbackFrom == FeedbackFrom.PowerServer).Count();
 
         public async Task<IEnumerable<FeedbackDto>> GetAllFeedbacks()
         {
@@ -39,6 +31,12 @@ namespace ReleaseNotes.Repository.Repositories
 
             await _context.AddAsync(releasesFeedback);
             await Save();
+
+            return _mapper.Map<FeedbackDto>(releasesFeedback);
+        }
+        public async Task<FeedbackDto> FindById(long id)
+        {
+            ReleasesFeedback releasesFeedback = await _context.Feedbacks.FirstOrDefaultAsync(x => x.FeedbackId == id);
 
             return _mapper.Map<FeedbackDto>(releasesFeedback);
         }

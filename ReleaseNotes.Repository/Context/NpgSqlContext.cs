@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ReleaseNotes.Entities.Model.Calls;
 using ReleaseNotes.Entities.Model.Consts;
 using ReleaseNotes.Entities.Model.Feedback;
 using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
@@ -16,14 +17,17 @@ namespace ReleaseNotes.Repository.Context
 
         //PDV
         public DbSet<ReleasePDV> ReleasePDVs { get; set; }
-        public DbSet<ModulePDV> ModulePDVs { get; set; }   
-        
+        public DbSet<ModulePDV> ModulePDVs { get; set; }
+
         //POWERSERVER
         public DbSet<ModulePowerServer> Modules { get; set; }
         public DbSet<ReleasePowerServer> Releases { get; set; }
 
         //FEEDBACK
         public DbSet<ReleasesFeedback> Feedbacks { get; set; }
+
+        //CALL
+        public DbSet<Call> Calls { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

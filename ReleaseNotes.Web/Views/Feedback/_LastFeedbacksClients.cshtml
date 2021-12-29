@@ -1,6 +1,5 @@
 ﻿@model X.PagedList.IPagedList<FeedbackViewModel>
 
-
 <div class="row">
     <div class="col-md-12">
         <!-- DATA TABLE -->
@@ -13,7 +12,8 @@
                         <th>Email</th>
                         <th>Detalhes</th>
                         <th>Data</th>
-                        <th>Status</th>
+                        <th>Aberto Chamado</th>
+                        <th>Status</th>                        
                         <th>Software</th>
                         <th></th>
                     </tr>
@@ -26,6 +26,18 @@
                             <td>@feed.Email</td>
                             <td>@feed.Details</td>
                             <td>@feed.Data</td>
+                            @if (@feed.OpenCall == true)
+                            {
+                                <td>
+                                    <span class="status--process">Sim</span>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <span class="status--denied">Não</span>
+                                </td>
+                            }
                             @if (@feed.FeedbackPositive)
                             {
                                 <td>
@@ -48,14 +60,8 @@
                             }
                             <td>
                                 <div class="table-data-feature">
-                                    <a asp-action="" asp-controller="" asp-route-id="" class="item" data-toggle="tooltip" data-placement="top" title="Editar">
-                                        <i class="zmdi zmdi-edit"></i>
-                                    </a>
-                                    <a asp-action="DeleteFeedback" asp-controller="Feedback" asp-route-id="@feed.FeedbackId" class="item" data-placement="top" data-toggle="tooltip" title="Excluir">
-                                        <i class="zmdi zmdi-delete"></i>
-                                    </a>
-                                    <a asp-action="Detail" asp-controller="Feedback" asp-route-id="@feed.FeedbackId" class="item" data-toggle="tooltip" data-placement="top" title="Mais Informações">
-                                        <i class="zmdi zmdi-more"></i>
+                                    <a asp-action="" asp-controller="" asp-route-id="" class="item" data-toggle="tooltip" data-placement="top" title="Abrir Chamado">
+                                        <i class="zmdi zmdi-settings"></i>
                                     </a>
                                 </div>
                             </td>

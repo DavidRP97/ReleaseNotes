@@ -4,3 +4,7 @@
 {
     <partial name = "_LastFeedbacks" />
 }
+@if(User.IsInRole(@Role.Client))
+{
+    <partial name = "_LastFeedbacksClients" />
+}

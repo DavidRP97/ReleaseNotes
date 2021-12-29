@@ -31,5 +31,21 @@ namespace ReleaseNotes.Service.Services
                 return await response.ReadContentAs<FeedbackViewModel>();
             else throw new Exception("Somenthing wrong when calling API");
         }
+
+        public async Task<bool> DeleteFeedback(long id, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.DeleteAsync($"{BasePath}/{id}");
+            if (response.IsSuccessStatusCode)
+                return await response.ReadContentAs<bool>();
+            else throw new Exception("Something went wrong when calling API");
+        }
+
+        public async Task<FeedbackViewModel> FindFeedbackById(long id, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.GetAsync($"{BasePath}/{id}");
+            return await response.ReadContentAs<FeedbackViewModel>();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ReleaseNotes.Entities.Model.Consts;
+﻿using ReleaseNotes.Entities.Model.Calls;
+using ReleaseNotes.Entities.Model.Consts;
 using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
 using ReleaseNotes.Entities.Model.ReleasesPowerServer;
 using System.ComponentModel.DataAnnotations;
@@ -18,11 +19,16 @@ namespace ReleaseNotes.Entities.Model.Feedback
         public string? Details { get; set; }
         [Required]
         public bool FeedbackPositive { get; set; }
-        public long? ModulePowerServerId { get; set; }
+        [Required]
+        public bool OpenCall { get; set; }        
+        public long? CallId { get; set; }
+        [ForeignKey("CallId")]
+        public Call? Call { get; set; }
         public long? ModulePdvId { get; set; }
         [ForeignKey("ModulePdvId")]
-        public ModulePDV? ModulePDV { get; set; }
+        public ModulePDV ModulePDV { get; set; }
+        public long? ModulePowerServerId { get; set; }
         [ForeignKey("ModulePowerServerId")]
-        public ModulePowerServer? ModulePowerServer { get; set; }
+        public ModulePowerServer ModulePowerServer { get; set; }
     }
 }

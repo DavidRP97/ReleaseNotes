@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<ReleasePowerServerViewModel>
 @{
     ViewData["Title"] = "Detalhes da Versão";
+    string Email = User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(x => x.Type == "email").Value : string.Empty;
 }
 
 @foreach (var item in Model)
@@ -12,13 +13,21 @@
             <div class="card-header">
                 <strong>@module.ModuleName (@module.Title)</strong>
                 @if (User.Identity.IsAuthenticated)
-                {                    
-                    <button type="button" class="btn btn-danger" style="position: center; float: right; margin: 0 5px">
-                        <i class="fa fa-thumbs-down"></i>&nbsp;
-                    </button>
-                    <button type="button" class="btn btn-primary" style="position: center; float: right; margin: 0 5px">
-                        <i class="fa fa-thumbs-up"></i>&nbsp;
-                    </button>
+                {
+                    @if (module.Feedbacks.FirstOrDefault(x => x.Email == Email && x.ModulePowerServerId == module.ModuleId) != null)
+                    {
+                        <label style="position: center; float: right; margin: 0 5px">Feedback Enviado!</label>
+                    }
+                    else
+                    {
+                        <a asp-action="CreateFeedbackNegativePowerServer" asp-controller="Feedback" asp-route-id="@module.ModuleId" type="button" class="btn btn-danger" style="position: center; float: right; margin: 0 5px">
+                            <i class="fa fa-thumbs-down"></i>
+                        </a>
+                        <a asp-action="CreateFeedbackPositivePowerServer" asp-controller="Feedback" asp-route-id="@module.ModuleId" type="button" class="btn btn-primary" style="position: center; float: right; margin: 0 5px">
+                            <i class="fa fa-thumbs-up"></i>
+                        </a>
+                    }
+
                 }
             </div>
             <div class="card-body card-block">
