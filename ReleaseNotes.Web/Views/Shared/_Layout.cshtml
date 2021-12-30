@@ -76,13 +76,24 @@
                         @if (User.IsInRole(@Role.Client))
                         {
                             <li>
+                                <a asp-action="Index" asp-controller="Call">
+                                    <i class="zmdi zmdi-phone"></i> Chamados
+                                </a>
+                            </li>
+                            <li>
                                 <a asp-action="Index" asp-controller="Feedback">
                                     <i class="fas fa-rss"></i> Feedbacks
                                 </a>
                             </li>
+                            
                         }
-                        @if (User.IsInRole("SuperControleAdmin"))
+                        @if (User.IsInRole(@Role.SuperControleAdmin))
                         {
+                            <li>
+                                <a asp-action="Index" asp-controller="Call">
+                                    <i class="zmdi zmdi-phone"></i> Chamados
+                                </a>
+                            </li>
                             <li>
                                 <a asp-action="Index" asp-controller="Feedback">
                                     <i class="fas fa-rss"></i> Feedbacks
@@ -135,6 +146,11 @@
                         @if (User.IsInRole(@Role.Client))
                         {
                             <li>
+                                <a asp-action="Index" asp-controller="Call">
+                                    <i class="zmdi zmdi-phone"></i> Chamados
+                                </a>
+                            </li>
+                            <li>
                                 <a asp-action="Index" asp-controller="Feedback">
                                     <i class="fas fa-rss"></i> Feedbacks
                                 </a>
@@ -142,6 +158,11 @@
                         }
                         @if (User.IsInRole(@Role.SuperControleAdmin))
                         {
+                            <li>
+                                <a asp-action="Index" asp-controller="Call">
+                                    <i class="zmdi zmdi-phone"></i> Chamados
+                                </a>
+                            </li>
                             <li>
                                 <a asp-action="Index" asp-controller="Feedback">
                                     <i class="fas fa-rss"></i> Feedbacks

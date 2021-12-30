@@ -13,9 +13,8 @@
                         <th>Detalhes</th>
                         <th>Data</th>
                         <th>Aberto Chamado</th>
-                        <th>Status</th>                        
+                        <th>Status</th>
                         <th>Software</th>
-                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,8 +59,14 @@
                             }
                             <td>
                                 <div class="table-data-feature">
-                                    <a asp-action="" asp-controller="" asp-route-id="" class="item" data-toggle="tooltip" data-placement="top" title="Abrir Chamado">
+                                    <a asp-action="Index" asp-controller="Call" asp-route-id="@feed.FeedbackId" class="item" data-toggle="tooltip" data-placement="top" title="Abrir Chamado">
                                         <i class="zmdi zmdi-settings"></i>
+                                    </a>
+                                    <a asp-action="DeleteFeedback" asp-controller="Feedback" asp-route-id="@feed.FeedbackId" class="item" data-placement="top" data-toggle="tooltip" title="Excluir">
+                                        <i class="zmdi zmdi-delete"></i>
+                                    </a>
+                                    <a asp-action="Detail" asp-controller="Feedback" asp-route-id="@feed.FeedbackId" class="item" data-toggle="tooltip" data-placement="top" title="Mais Informações">
+                                        <i class="zmdi zmdi-more"></i>
                                     </a>
                                 </div>
                             </td>

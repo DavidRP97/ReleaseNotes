@@ -37,9 +37,8 @@ namespace ReleaseNotes.API.Controllers
             return Ok(releases);
         }
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<ActionResult<ReleasePDV>> Create([FromBody] ReleaseDto release)
+        public async Task<ActionResult<ReleaseDto>> Create([FromBody] ReleaseDto release)
         {
             if (release == null) return NotFound();
 
@@ -73,7 +72,7 @@ namespace ReleaseNotes.API.Controllers
             return Ok(addRelease);
         }
         [HttpDelete("{id}")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<bool>> Delete(long id)
         {
             var status = await _releasePowerPDVRepository.Delete(id);
@@ -81,7 +80,7 @@ namespace ReleaseNotes.API.Controllers
             return Ok(status);
         }
         [HttpDelete("Module/{id}")]
-        //[Authorize]
+        [Authorize]
         public async Task<ActionResult<bool>> DeleteModule(long id)
         {
             var status = await _releasePowerPDVRepository.DeleteModule(id);

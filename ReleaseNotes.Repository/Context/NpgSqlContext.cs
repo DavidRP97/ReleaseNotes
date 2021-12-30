@@ -33,6 +33,20 @@ namespace ReleaseNotes.Repository.Context
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Call>().HasData(new Call
+            {
+                CallId = 1,
+                Date = DateTime.Now.ToLongDateString(),
+                Detail = "Isso é um teste",
+                Email = "desenvolvimento04@supercontrole.com",
+                IsUrgent = true,
+                PriorityDegree = Priority.High,
+                Software = FeedbackFrom.PowerServer,
+                Status = Status.Waiting,
+                Subject = "TESTE",
+                UserName = "David Paulino"
+            });
+
             modelBuilder.Entity<ReleasePowerServer>().HasData(new ReleasePowerServer
             {
                 ReleaseId = 1,

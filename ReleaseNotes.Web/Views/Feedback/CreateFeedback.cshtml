@@ -2,6 +2,7 @@
 
 @{
     string Email = User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(x => x.Type == "email").Value : string.Empty;
+    ViewData["Title"] = "Criar Feedback";
 }
 
 <div class="col-lg-6">

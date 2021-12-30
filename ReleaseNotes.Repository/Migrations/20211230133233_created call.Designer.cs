@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ReleaseNotes.Repository.Context;
@@ -11,9 +12,10 @@ using ReleaseNotes.Repository.Context;
 namespace ReleaseNotes.Repository.Migrations
 {
     [DbContext(typeof(NpgSqlContext))]
-    partial class NpgSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20211230133233_created call")]
+    partial class createdcall
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -183,9 +185,6 @@ namespace ReleaseNotes.Repository.Migrations
                     b.Property<int>("PriorityDegree")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Software")
-                        .HasColumnType("integer");
-
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
@@ -202,21 +201,6 @@ namespace ReleaseNotes.Repository.Migrations
                     b.HasIndex("FeedbackId");
 
                     b.ToTable("Calls");
-
-                    b.HasData(
-                        new
-                        {
-                            CallId = 1L,
-                            Date = "quinta-feira, 30 de dezembro de 2021",
-                            Detail = "Isso é um teste",
-                            Email = "desenvolvimento04@supercontrole.com",
-                            IsUrgent = true,
-                            PriorityDegree = 0,
-                            Software = 1,
-                            Status = 1,
-                            Subject = "TESTE",
-                            UserName = "David Paulino"
-                        });
                 });
 
             modelBuilder.Entity("ReleaseNotes.Entities.Model.Feedback.ReleasesFeedback", b =>

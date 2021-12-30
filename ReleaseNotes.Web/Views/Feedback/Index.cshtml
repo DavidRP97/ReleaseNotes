@@ -1,10 +1,15 @@
 ﻿@model IEnumerable<FeedbackViewModel>
 
+@{
+    ViewData["Title"] = "Feedbacks";
+}
+
+
 @if (User.IsInRole(@Role.SuperControleAdmin))
 {
-    <partial name = "_LastFeedbacks" />
+    <partial name="_LastFeedbacks" />
 }
-@if(User.IsInRole(@Role.Client))
+@if (User.IsInRole(@Role.Client))
 {
-    <partial name = "_LastFeedbacksClients" />
+    <partial name="_LastFeedbacksClients" />
 }

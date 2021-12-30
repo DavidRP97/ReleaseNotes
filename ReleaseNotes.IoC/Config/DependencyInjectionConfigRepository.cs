@@ -8,7 +8,8 @@ namespace ReleaseNotes.IoC.Config
     {
         public static void ConfigureDIRepository(this IServiceCollection services)
         {
-            services.AddScoped<IFeedbackRepository, FeedbackRepository>();  
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+            services.AddScoped<ICallRepository, CallRepository>();
             services.AddScoped<IReleasePowerServerRepository, ReleasePowerServerRepository>();
             services.AddScoped<IReleasePowerPDVRepository, ReleasePowerPDVRepository>();
         }

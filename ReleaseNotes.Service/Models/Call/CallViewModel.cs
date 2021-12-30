@@ -1,17 +1,11 @@
-﻿using ReleaseNotes.Entities.Model.Consts;
-using ReleaseNotes.Entities.Model.Feedback;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using ReleaseNotes.Service.Utils;
 
-namespace ReleaseNotes.Entities.Model.Calls
+namespace ReleaseNotes.Service.Models.Call
 {
-    public class Call
+    public class CallViewModel
     {
-        [Key]
         public long CallId { get; set; }
         public long? FeedbackId { get; set; }
-        [ForeignKey("FeedbackId")]
-        public ReleasesFeedback? Feedback { get; set; }
         public bool IsUrgent { get; set; }
         public Priority PriorityDegree { get; set; }
         public Status Status { get; set; }

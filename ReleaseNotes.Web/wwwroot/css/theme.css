@@ -4680,7 +4680,22 @@ section {
 .status--process {
     color: #00ad5f;
 }
+.status--green {
+    color: #008000;
+}
 
+.status--none {
+    color: #808080;
+}
+.status--low {
+    color: #FFFF00;
+}
+.status--high {
+    color: #FF0000;
+}
+.status--medium {
+    color: #FFA500;
+}
 .status--denied {
     color: #fa4251;
 }

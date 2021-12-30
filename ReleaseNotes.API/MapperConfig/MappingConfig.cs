@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ReleaseNotes.Entities.Model.Calls;
 using ReleaseNotes.Entities.Model.Feedback;
 using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
 using ReleaseNotes.Entities.Model.ReleasesPowerServer;
@@ -25,6 +26,9 @@ namespace ReleaseNotes.API.MapperConfig
 
                 config.CreateMap<FeedbackDto, ReleasesFeedback>();
                 config.CreateMap<ReleasesFeedback, FeedbackDto>();
+
+                config.CreateMap<CallDto, Call>();
+                config.CreateMap<Call, CallDto>();
             });
 
             return mappingConfig;

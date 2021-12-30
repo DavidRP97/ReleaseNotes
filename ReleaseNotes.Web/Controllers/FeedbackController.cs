@@ -122,6 +122,7 @@ namespace ReleaseNotes.Web.Controllers
 
                 ViewBag.From = "PDV";
                 ViewBag.VersionNumber = version.VersionNumber;
+                ViewBag.Title = pdv.Title;
                 ViewBag.ModuleName = pdv.ModuleName;
                 ViewBag.Description = pdv.Notes;
             }
@@ -153,6 +154,23 @@ namespace ReleaseNotes.Web.Controllers
 
             if (model == true) return RedirectToAction(nameof(Index));
             return NotFound();
+        }
+        public async Task<ActionResult> DeleteFeedback(long? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var token = await HttpContext.GetTokenAsync("access_token");
+            var obj = await _feedbackService.FindFeedbackById(id.Value, token);
+
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            return View(obj);
+
         }
     }
 }

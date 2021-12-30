@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using ReleaseNotes.Service.Interfaces;
 using ReleaseNotes.Service.Services;
 
@@ -20,6 +19,10 @@ namespace ReleaseNotes.IoC.Config
             );
 
             Services.AddHttpClient<IFeedbackService, FeedbackService>(c =>
+                c.BaseAddress = new Uri(BaseAdress)
+            );
+
+            Services.AddHttpClient<ICallService, CallService>(c =>
                 c.BaseAddress = new Uri(BaseAdress)
             );
         }

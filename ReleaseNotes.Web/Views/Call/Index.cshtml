@@ -1,0 +1,14 @@
+﻿@model IEnumerable<CallViewModel>
+
+@{
+    ViewData["Title"] = "Chamados";
+}
+
+@if (User.IsInRole(@Role.Client))
+{
+    <partial name="_CallsClient"/>
+}
+@if (User.IsInRole(@Role.SuperControleAdmin))
+{
+     <partial name="_Calls"/>
+}

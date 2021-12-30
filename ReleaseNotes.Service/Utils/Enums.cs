@@ -1,11 +1,5 @@
-﻿namespace ReleaseNotes.Entities.Model.Consts
+﻿namespace ReleaseNotes.Service.Utils
 {
-    public enum StatusConta
-    {
-        APROVADO,
-        ANALISE,
-        REPROVADO
-    }
     public enum FeedbackFrom
     {
         PDV,
@@ -14,7 +8,7 @@
     public enum Priority
     {
         High,
-        Medium, 
+        Medium,
         Low,
         None
     }
