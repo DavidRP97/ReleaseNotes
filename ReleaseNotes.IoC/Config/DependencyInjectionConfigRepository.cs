@@ -12,6 +12,7 @@ namespace ReleaseNotes.IoC.Config
             services.AddScoped<ICallRepository, CallRepository>();
             services.AddScoped<IReleasePowerServerRepository, ReleasePowerServerRepository>();
             services.AddScoped<IReleasePowerPDVRepository, ReleasePowerPDVRepository>();
+            services.AddScoped<IEmailRepository, EmailRepository>();
         }
     }
 }

@@ -25,6 +25,11 @@ namespace ReleaseNotes.IoC.Config
             Services.AddHttpClient<ICallService, CallService>(c =>
                 c.BaseAddress = new Uri(BaseAdress)
             );
+            Services.AddHttpClient<IEmailService, EmailService>(c =>
+                c.BaseAddress = new Uri(BaseAdress)
+            );
+
+            Services.AddScoped<IEmailSender, EmailSender>();
         }
     }
 }

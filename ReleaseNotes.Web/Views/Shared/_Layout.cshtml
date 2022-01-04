@@ -85,7 +85,7 @@
                                     <i class="fas fa-rss"></i> Feedbacks
                                 </a>
                             </li>
-                            
+
                         }
                         @if (User.IsInRole(@Role.SuperControleAdmin))
                         {
@@ -104,11 +104,31 @@
                                     <i class="fas fa-gear"></i>Painel de Controle
                                 </a>
                                 <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                    <li>
-                                        <a asp-action="IndexControlPainel" asp-controller="ReleasePowerServer"><i class="fas  fa-plus-square"></i>PowerServer</a>
+                                    <li class="active has-sub">
+                                        <a class="js-arrow" href="#">
+                                            <i class="fas fa-plus"></i>Adicionar Notas
+                                        </a>
+                                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                            <li>
+                                                <a asp-action="IndexControlPainel" asp-controller="ReleasePowerServer"><i class="fas  fa-plus-square"></i>PowerServer</a>
+                                            </li>
+                                            <li>
+                                                <a asp-action="IndexControlPainel" asp-controller="ReleasePDV"><i class="fas  fa-plus-square"></i>PDV</a>
+                                            </li>
+                                        </ul>
                                     </li>
-                                    <li>
-                                        <a asp-action="IndexControlPainel" asp-controller="ReleasePDV"><i class="fas  fa-plus-square"></i>PDV</a>
+                                    <li class="active has-sub">
+                                        <a class="js-arrow" href="#">
+                                            <i class="fas fa-gear"></i>Configurações
+                                        </a>
+                                        <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                            <li>
+                                                <a asp-action="Index" asp-controller="EmailConfig"><i class="fas fa-envelope"></i>Email</a>
+                                            </li>
+                                            <li>
+                                                <a asp-action="Index" asp-controller="User"><i class="fas fa-user"></i>Funções</a>
+                                            </li>
+                                        </ul>
                                     </li>
                                 </ul>
                             </li>
@@ -170,7 +190,7 @@
                             </li>
                             <li class="active has-sub">
                                 <a class="js-arrow" href="#">
-                                    <i class="fas fa-gear"></i>Painel de Controle
+                                    <i class="fas fa-plus"></i>Adicionar Notas
                                 </a>
                                 <ul class="list-unstyled navbar__sub-list js-sub-list">
                                     <li>
@@ -178,6 +198,19 @@
                                     </li>
                                     <li>
                                         <a asp-action="IndexControlPainel" asp-controller="ReleasePDV"><i class="fas  fa-plus-square"></i>PDV</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="active has-sub">
+                                <a class="js-arrow" href="#">
+                                    <i class="fas fa-gear"></i>Configurações
+                                </a>
+                                <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                    <li>
+                                        <a asp-action="Index" asp-controller="EmailConfig"><i class="fas fa-envelope"></i>Email</a>
+                                    </li>
+                                    <li>
+                                        <a asp-action="Index" asp-controller="User"><i class="fas fa-user"></i>Funções</a>
                                     </li>
                                 </ul>
                             </li>

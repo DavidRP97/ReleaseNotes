@@ -111,8 +111,6 @@ namespace ReleaseNotes.Web.Controllers
         {
             var token = await HttpContext.GetTokenAsync("access_token");
 
-            ViewBag.Token = token;
-
             var feedbackDetail = await _feedbackService.FindFeedbackById(id, token);
 
             if (feedbackDetail.FeedbackFrom == Service.Utils.FeedbackFrom.PDV)
@@ -122,7 +120,7 @@ namespace ReleaseNotes.Web.Controllers
 
                 ViewBag.From = "PDV";
                 ViewBag.VersionNumber = version.VersionNumber;
-                ViewBag.Title = pdv.Title;
+                ViewBag.TitleNote = pdv.Title;
                 ViewBag.ModuleName = pdv.ModuleName;
                 ViewBag.Description = pdv.Notes;
             }
@@ -134,7 +132,7 @@ namespace ReleaseNotes.Web.Controllers
 
                 ViewBag.From = "PDV";
                 ViewBag.VersionNumber = version.VersionNumber;
-                ViewBag.Title = power.Title;
+                ViewBag.TitleNote = power.Title;
                 ViewBag.ModuleName = power.ModuleName;
                 ViewBag.Description = power.Notes;
             }

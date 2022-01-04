@@ -1,0 +1,76 @@
+﻿@model CallViewModel
+
+@{
+    string Email = User.Identity.IsAuthenticated ? User.Claims.FirstOrDefault(x => x.Type == "email").Value : string.Empty;
+    ViewData["Title"] = "Abrir Chamado";
+    string Detail = ViewBag.Detail == null ? string.Empty : ViewBag.Detail;
+}
+
+@if (User.IsInRole(@Role.Client))
+{
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h3 class="text-center title-2">Observações</h3>
+                </div>
+                <hr>
+                <form asp-action="Create">
+                    <input asp-for="Email" value="@Email" hidden>
+                    <input asp-for="UserName" value="@User.Identity.Name" hidden>
+                    <input asp-for="Date" value="@ViewBag.Date" hidden>
+                    <input asp-for="FeedbackId" value="@ViewBag.FeedbackId" hidden>
+                    <input asp-for="PriorityDegree" value="@Priority.None" hidden>
+                    <input asp-for="Status" value="@Status.None" hidden>
+
+                    <div class="row">
+
+                        <div class="form-group">
+                            <label for="IsUrgent" class=" form-control-label">Solicitar Urgência?</label>
+                            <label class="switch switch-text switch-success">
+                                <input asp-for="IsUrgent" type="checkbox" class="switch-input" checked="false">
+                                <span data-on="Sim" data-off="Não" class="switch-label"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="Subject" class=" form-control-label">Assunto</label>
+                            <input asp-for="Subject" placeholder="Ex.: Falha no Módulo Financeiro / Contas a Pagar / Versão 1.0.1" class="form-control" value="@Detail">
+                            <span asp-validation-for="Subject" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Subject" class=" form-control-label">Descreva os detalhes do chamado</label>
+                            <textarea asp-for="Detail" id="textarea-input" rows="6" placeholder="Descrição..." class="form-control"></textarea>
+                        </div>
+                        <div class="form-group">                            
+                            <select asp-for="Software" asp-items="Html.GetEnumValueSelectList<FeedbackFrom>()" class="form-select">
+                                <option value="0">Escolher Software</option>
+                                <option value="1">PDV</option>
+                                <option value="2">PowerServer</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="formFile" class="form-label">Anexo</label>
+                            <input asp-for="Imagem" class="form-control" type="file" id="image">
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary btn-sm">
+                                Abrir Chamado
+                            </button>
+                            <a asp-action="Index" asp-controller="Call" class="btn btn-warning btn-sm">Voltar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <partial name="_Credential" />
+}

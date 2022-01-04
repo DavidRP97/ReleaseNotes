@@ -13,15 +13,17 @@
     }
     public enum Priority
     {
-        High,
-        Medium, 
-        Low,
-        None
+        None = 0,
+        High = 1,
+        Medium = 2,
+        Low = 3,
+
     }
     public enum Status
     {
-        Resolved,
-        Waiting,
-        None
+        None = 0,
+        Resolved = 1,
+        Waiting = 2
+
     }
 }

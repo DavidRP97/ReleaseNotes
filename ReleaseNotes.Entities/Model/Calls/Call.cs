@@ -11,7 +11,7 @@ namespace ReleaseNotes.Entities.Model.Calls
         public long CallId { get; set; }
         public long? FeedbackId { get; set; }
         [ForeignKey("FeedbackId")]
-        public ReleasesFeedback? Feedback { get; set; }
+        public virtual ReleasesFeedback? Feedback { get; set; }
         public bool IsUrgent { get; set; }
         public Priority PriorityDegree { get; set; }
         public Status Status { get; set; }

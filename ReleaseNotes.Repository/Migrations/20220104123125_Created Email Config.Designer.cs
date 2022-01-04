@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ReleaseNotes.Repository.Context;
@@ -11,9 +12,10 @@ using ReleaseNotes.Repository.Context;
 namespace ReleaseNotes.Repository.Migrations
 {
     [DbContext(typeof(NpgSqlContext))]
-    partial class NpgSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20220104123125_Created Email Config")]
+    partial class CreatedEmailConfig
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -235,30 +237,19 @@ namespace ReleaseNotes.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<long?>("ReceiverId")
+                        .HasColumnType("bigint");
+
                     b.Property<long>("SenderEmailConfigId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ReceiverId");
+
                     b.HasIndex("SenderEmailConfigId");
 
                     b.ToTable("Receivers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Email = "d.rodrigues0505@gmail.com",
-                            Name = "David Rodrigues",
-                            SenderEmailConfigId = 1L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Email = "analise@supercontrole.com",
-                            Name = "Rogério Trevisan",
-                            SenderEmailConfigId = 1L
-                        });
                 });
 
             modelBuilder.Entity("ReleaseNotes.Entities.Model.Email.Sender", b =>
@@ -282,19 +273,9 @@ namespace ReleaseNotes.Repository.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SenderEmailConfigId")
-                        .IsUnique();
+                    b.HasIndex("SenderEmailConfigId");
 
                     b.ToTable("Senders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Email = "desenvolvimento04@supercontrole.com",
-                            Name = "SuperControle Chamados",
-                            SenderEmailConfigId = 1L
-                        });
                 });
 
             modelBuilder.Entity("ReleaseNotes.Entities.Model.Email.SenderEmailConfig", b =>
@@ -305,15 +286,30 @@ namespace ReleaseNotes.Repository.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("SenderConfigId"));
 
+                    b.Property<string>("ApiKey")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<long>("ReceiverId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("SenderId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("SenderConfigId");
 
-                    b.ToTable("SenderEmailConfig");
+                    b.HasIndex("SenderId");
 
-                    b.HasData(
-                        new
-                        {
-                            SenderConfigId = 1L
-                        });
+                    b.ToTable("SenderEmailConfig");
                 });
 
             modelBuilder.Entity("ReleaseNotes.Entities.Model.Feedback.ReleasesFeedback", b =>
@@ -702,8 +698,12 @@ namespace ReleaseNotes.Repository.Migrations
 
             modelBuilder.Entity("ReleaseNotes.Entities.Model.Email.Receiver", b =>
                 {
-                    b.HasOne("ReleaseNotes.Entities.Model.Email.SenderEmailConfig", "SenderEmailConfig")
+                    b.HasOne("ReleaseNotes.Entities.Model.Email.SenderEmailConfig", null)
                         .WithMany("Receivers")
+                        .HasForeignKey("ReceiverId");
+
+                    b.HasOne("ReleaseNotes.Entities.Model.Email.SenderEmailConfig", "SenderEmailConfig")
+                        .WithMany()
                         .HasForeignKey("SenderEmailConfigId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -714,12 +714,23 @@ namespace ReleaseNotes.Repository.Migrations
             modelBuilder.Entity("ReleaseNotes.Entities.Model.Email.Sender", b =>
                 {
                     b.HasOne("ReleaseNotes.Entities.Model.Email.SenderEmailConfig", "SenderEmailConfig")
-                        .WithOne("Sender")
-                        .HasForeignKey("ReleaseNotes.Entities.Model.Email.Sender", "SenderEmailConfigId")
+                        .WithMany()
+                        .HasForeignKey("SenderEmailConfigId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("SenderEmailConfig");
+                });
+
+            modelBuilder.Entity("ReleaseNotes.Entities.Model.Email.SenderEmailConfig", b =>
+                {
+                    b.HasOne("ReleaseNotes.Entities.Model.Email.Sender", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("ReleaseNotes.Entities.Model.Feedback.ReleasesFeedback", b =>
@@ -768,8 +779,6 @@ namespace ReleaseNotes.Repository.Migrations
             modelBuilder.Entity("ReleaseNotes.Entities.Model.Email.SenderEmailConfig", b =>
                 {
                     b.Navigation("Receivers");
-
-                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("ReleaseNotes.Entities.Model.ReleasesPowerPDV.ModulePDV", b =>

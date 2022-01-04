@@ -1,4 +1,5 @@
-﻿using ReleaseNotes.Service.Utils;
+﻿using Microsoft.AspNetCore.Http;
+using ReleaseNotes.Service.Utils;
 
 namespace ReleaseNotes.Service.Models.Call
 {
@@ -10,10 +11,17 @@ namespace ReleaseNotes.Service.Models.Call
         public Priority PriorityDegree { get; set; }
         public Status Status { get; set; }
         public FeedbackFrom Software { get; set; }
+        public Filters Filters { get; set; }
+        public string Imagem { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Detail { get; set; }
         public string Subject { get; set; }
         public string Date { get; set; }
+
+        public DateTime DateToDatetime
+        {
+            get { return Convert.ToDateTime(Date); }
+        }
     }
 }

@@ -1,81 +1,86 @@
 ﻿@model X.PagedList.IPagedList<CallViewModel>
 
-<div class="row">
-    <div class="col-md-12">
-        <!-- DATA TABLE -->
-        <h3 class="title-5 m-b-35">Últimos Feedbacks</h3>
-        <div class="table-responsive table-responsive-data2">
-            <table class="table table-data2">
-                <thead>
-                    <tr>
-                        <th>Cliente</th>
-                        <th>Email</th>
-                        <th>Software</th>
-                        <th>Assunto</th>
-                        <th>Detalhes</th>
-                        <th>Data</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var call in Model)
-                    {
-                        <tr class="tr-shadow">
-                            <td>@call.UserName</td>
-                            <td>@call.Email</td>
-                            @if (@call.Software == FeedbackFrom.PDV)
-                            {
-                                <td> PDV </td>
-                            }
-                            @if (@call.Software == FeedbackFrom.PowerServer)
-                            {
-                                <td>PowerServer</td>
-                            }
-                            <td>@call.Subject</td>
-                            <td>@call.Detail</td>
-                            <td>@call.Date</td>
-                            @if (@call.IsUrgent == true)
-                            {
-                                <td>
-                                    <span class="status--process">Sim</span>
-                                </td>
-                            }
-                            else
-                            {
-                                <td>
-                                    <span class="status--denied">Não</span>
-                                </td>
-                            }
-                            @if (@call.Status == Status.None)
-                            {
-                                <td>
-                                    <span class="status--none">Não Avaliado</span>
-                                </td>
-                            }
-                            @if (@call.Status == Status.Waiting)
-                            {
-                                <td>
-                                    <span class="status--medium">Em Desenvolvimento</span>
-                                </td>
-                            }
-                            @if (@call.Status == Status.Resolved)
-                            {
-                                <td>
-                                    <span class="status--green">Resolvido</span>
-                                </td>
-                            }                            
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">Chamados Abertos</h3>
+            <div class="table-data__tool">
+                <div class="table-data__tool-left">
+                </div>
+                <div class="table-data__tool-right">
+                    <a asp-action="Create" asp-controller="Call" class="au-btn au-btn-icon au-btn--green au-btn--small">
+                        <i class="zmdi zmdi-plus"></i>Abrir Chamado
+                    </a>
+                </div>
+            </div>
+            <div class="table-responsive table-responsive-data2">
+                <table class="table table-data2">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Email</th>
+                            <th>Software</th>
+                            <th>Assunto</th>
+                            <th>Detalhes</th>
+                            <th>Data</th>
+                            <th>Status</th>
                         </tr>
-                        <tr class="spacer"></tr>
-                    }
+                    </thead>
+                    <tbody>
+                        @foreach (var call in Model)
+                        {
+                            <tr class="tr-shadow">
+                                <td>@call.UserName</td>
+                                <td>@call.Email</td>
 
-                </tbody>
-            </table>
-        </div>
-        <!-- END DATA TABLE -->
+                                @if (@call.Software == FeedbackFrom.PDV)
+                                {
+                                    <td> PDV </td>
+                                }
+                                @if (@call.Software == FeedbackFrom.PowerServer)
+                                {
+                                    <td>PowerServer</td>
+                                }
+                                <td>@call.Subject</td>
+                                <td>@call.Detail</td>
+                                <td>@call.DateToDatetime</td>
+                                @if (@call.Status == Status.None)
+                                {
+                                    <td>
+                                        <span class="badge badge-secondary">Não Avaliado</span>
+                                    </td>
+                                }
+                                @if (@call.Status == Status.Waiting)
+                                {
+                                    <td>
+                                        <span class="badge badge-primary">Em Desenvolvimento</span>
+                                    </td>
+                                }
+                                @if (@call.Status == Status.Resolved)
+                                {
+                                    <td>
+                                        <span class="badge badge-success">Resolvido</span>
+                                    </td>
+                                }
+                            </tr>
+                            <tr class="spacer"></tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- END DATA TABLE -->
     </div>
-</div>
-@Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }), new PagedListRenderOptions
+    </div>
+    @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }), new PagedListRenderOptions
 {
 	LiElementClasses = new[] { "page-item" },
 	PageClasses = new[] { "page-link" },
 })
+}
+else
+{
+    <partial name="_Credentials" />
+}

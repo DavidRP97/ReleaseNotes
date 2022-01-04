@@ -22,5 +22,29 @@ namespace ReleaseNotes.Service.Services
 
             return await response.ReadContentAs<List<CallViewModel>>();
         }
+
+        public async Task<CallViewModel> CreateCall(CallViewModel model, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.PostAsJson(BasePath, model);
+            if (response.IsSuccessStatusCode)
+                return await response.ReadContentAs<CallViewModel>();
+            else throw new Exception("Somenthing wrong when calling API");
+        }
+        public async Task<CallViewModel> UpdateCall(CallViewModel model, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.PutAsJson(BasePath, model);
+            if (response.IsSuccessStatusCode)
+                return await response.ReadContentAs<CallViewModel>();
+            else throw new Exception("Something went wrong when calling API");
+        }
+
+        public async Task<CallViewModel> FindCallById(long id, string token)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var response = await _httpClient.GetAsync($"{BasePath}/{id}");
+            return await response.ReadContentAs<CallViewModel>();
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ReleaseNotes.Entities.Model.Calls;
+using ReleaseNotes.Entities.Model.Email;
 using ReleaseNotes.Entities.Model.Feedback;
 using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
 using ReleaseNotes.Entities.Model.ReleasesPowerServer;
@@ -29,6 +30,15 @@ namespace ReleaseNotes.API.MapperConfig
 
                 config.CreateMap<CallDto, Call>();
                 config.CreateMap<Call, CallDto>();
+
+                config.CreateMap<EmailDto, SenderEmailConfig>();
+                config.CreateMap<SenderEmailConfig, EmailDto>();
+
+                config.CreateMap<SenderDto, Sender>();
+                config.CreateMap<Sender, SenderDto>();
+
+                config.CreateMap<ReceiverDto, Receiver>();
+                config.CreateMap<Receiver, ReceiverDto>();
             });
 
             return mappingConfig;

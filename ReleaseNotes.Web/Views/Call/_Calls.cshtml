@@ -1,118 +1,125 @@
 ﻿@model X.PagedList.IPagedList<CallViewModel>
 
-<div class="row">
-    <div class="col-md-12">
-        <!-- DATA TABLE -->
-        <h3 class="title-5 m-b-35">Últimos Feedbacks</h3>
-        <div class="table-responsive table-responsive-data2">
-            <table class="table table-data2">
-                <thead>
-                    <tr>
-                        <th>Cliente</th>
-                        <th>Email</th>
-                        <th>Software</th>
-                        <th>Assunto</th>
-                        <th>Detalhes</th>
-                        <th>Data</th>
-                        <th>Urgente</th>
-                        <th>Prioridade</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var call in Model)
-                    {
-                        <tr class="tr-shadow">
-                            <td>@call.UserName</td>
-                            <td>@call.Email</td>
-                            @if (@call.Software == FeedbackFrom.PDV)
-                            {
-                                <td> PDV </td>
-                            }
-                            @if (@call.Software == FeedbackFrom.PowerServer)
-                            {
-                                <td>PowerServer</td>
-                            }
-                            <td>@call.Subject</td>
-                            <td>@call.Detail</td>
-                            <td>@call.Date</td>
-                            @if (@call.IsUrgent == true)
-                            {
-                                <td>
-                                    <span class="badge badge-danger">Sim</span>
-                                </td>
-                            }
-                            else
-                            {
-                                <td>
-                                    <span class="badge badge-success">Não</span>
-                                </td>
-                            }
-                            @if (@call.PriorityDegree == Priority.None)
-                            {
-                                <td>
-                                    <span class="badge badge-secondary">Não Avaliado</span>
-                                </td>
-                            }
-                            @if (@call.PriorityDegree == Priority.Low)
-                            {
-                                <td>
-                                    <span class="badge badge-warning">Baixa</span>
-                                </td>
-                            }
-                            @if (@call.PriorityDegree == Priority.Medium)
-                            {
-                                <td>
-                                    <span class="badge badge-info">Média</span>
-                                </td>
-                            }
-                            @if (@call.PriorityDegree == Priority.High)
-                            {
-                                <td>
-                                    <span class="badge badge-danger">Alta</span>
-                                </td>
-                            }
-                            @if (@call.Status == Status.None)
-                            {
-                                <td>
-                                    <span class="status--none">Não Avaliado</span>
-                                </td>
-                            }
-                            @if (@call.Status == Status.Waiting)
-                            {
-                                <td>
-                                    <span class="badge badge-info">Em Desenvolvimento</span>
-                                </td>
-                            }
-                            @if (@call.Status == Status.Resolved)
-                            {
-                                <td>
-                                    <span class="badge badge-success">Resolvido</span>
-                                </td>
-                            }
-                            <td>
-                                <div class="table-data-feature">
-                                    <a asp-action="Edit" asp-controller="Call" asp-route-id="@call.CallId" class="item" data-toggle="tooltip" data-placement="top" title="Editar Status / Prioridade">
-                                        <i class="zmdi zmdi-edit"></i>
-                                    </a>
-                                    <a asp-action="Detail" asp-controller="Call" asp-route-id="@call.CallId" class="item" data-toggle="tooltip" data-placement="top" title="Mais Informações">
-                                        <i class="zmdi zmdi-more"></i>
-                                    </a>
-                                </div>
-                            </td>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <!-- DATA TABLE -->
+        <h3 class="title-5 m-b-35">Chamados Abertos</h3>
+            <div class="table-responsive table-responsive-data2">
+                <table class="table table-data2">
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Email</th>
+                            <th>Software</th>
+                            <th>Assunto</th>
+                            <th>Detalhes</th>
+                            <th>Data</th>
+                            <th>Urgente</th>
+                            <th>Prioridade</th>
+                            <th>Status</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var call in Model)
+                        {
+                            <tr class="tr-shadow">
+                                <td>@call.UserName</td>
+                                <td>@call.Email</td>
+                                @if (@call.Software == FeedbackFrom.PDV)
+                                {
+                                    <td> PDV </td>
+                                }
+                                @if (@call.Software == FeedbackFrom.PowerServer)
+                                {
+                                    <td>PowerServer</td>
+                                }
+                                <td>@call.Subject</td>
+                                <td>@call.Detail</td>
+                                <td>@call.DateToDatetime</td>
+                                @if (@call.IsUrgent == true)
+                                {
+                                    <td>
+                                        <span class="badge badge-danger">Sim</span>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <span class="badge badge-success">Não</span>
+                                    </td>
+                                }
+                                @if (@call.PriorityDegree == Priority.None)
+                                {
+                                    <td>
+                                        <span class="badge badge-secondary">Não Avaliado</span>
+                                    </td>
+                                }
+                                @if (@call.PriorityDegree == Priority.Low)
+                                {
+                                    <td>
+                                        <span class="badge badge-warning">Baixa</span>
+                                    </td>
+                                }
+                                @if (@call.PriorityDegree == Priority.Medium)
+                                {
+                                    <td>
+                                        <span class="badge badge-info">Média</span>
+                                    </td>
+                                }
+                                @if (@call.PriorityDegree == Priority.High)
+                                {
+                                    <td>
+                                        <span class="badge badge-danger">Alta</span>
+                                    </td>
+                                }
+                                @if (@call.Status == Status.None)
+                                {
+                                    <td>
+                                        <span class="badge badge-secondary">Não Avaliado</span>
+                                    </td>
+                                }
+                                @if (@call.Status == Status.Waiting)
+                                {
+                                    <td>
+                                        <span class="badge badge-primary">Em Desenvolvimento</span>
+                                    </td>
+                                }
+                                @if (@call.Status == Status.Resolved)
+                                {
+                                    <td>
+                                        <span class="badge badge-success">Resolvido</span>
+                                    </td>
+                                }
+                                <td>
+                                    <div class="table-data-feature">
+                                        <a asp-action="Update" asp-controller="Call" asp-route-id="@call.CallId" class="item" data-toggle="tooltip" data-placement="top" title="Editar Status / Prioridade">
+                                            <i class="zmdi zmdi-edit"></i>
+                                        </a>
+                                        <a asp-action="Detail" asp-controller="Call" asp-route-id="@call.CallId" class="item" data-toggle="tooltip" data-placement="top" title="Mais Informações">
+                                            <i class="zmdi zmdi-more"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
 
-                        <tr class="spacer"></tr>
-                    }
+                            <tr class="spacer"></tr>
+                        }
 
-                </tbody>
-            </table>
-        </div>
-        <!-- END DATA TABLE -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- END DATA TABLE -->
     </div>
-</div>
-@Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }), new PagedListRenderOptions
+    </div>
+    @Html.PagedListPager(Model, pagina => Url.Action("Index", new { pagina }), new PagedListRenderOptions
 {
 	LiElementClasses = new[] { "page-item" },
 	PageClasses = new[] { "page-link" },
 })
+}
+else
+{
+    <partial name="_Credentials" />
+}

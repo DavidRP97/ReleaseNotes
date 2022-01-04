@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ReleaseNotes.Repository.Context;
@@ -11,9 +12,10 @@ using ReleaseNotes.Repository.Context;
 namespace ReleaseNotes.Repository.Migrations
 {
     [DbContext(typeof(NpgSqlContext))]
-    partial class NpgSqlContextModelSnapshot : ModelSnapshot
+    [Migration("20220104133219_changes")]
+    partial class changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -243,22 +245,6 @@ namespace ReleaseNotes.Repository.Migrations
                     b.HasIndex("SenderEmailConfigId");
 
                     b.ToTable("Receivers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Email = "d.rodrigues0505@gmail.com",
-                            Name = "David Rodrigues",
-                            SenderEmailConfigId = 1L
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Email = "analise@supercontrole.com",
-                            Name = "Rogério Trevisan",
-                            SenderEmailConfigId = 1L
-                        });
                 });
 
             modelBuilder.Entity("ReleaseNotes.Entities.Model.Email.Sender", b =>
@@ -286,15 +272,6 @@ namespace ReleaseNotes.Repository.Migrations
                         .IsUnique();
 
                     b.ToTable("Senders");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Email = "desenvolvimento04@supercontrole.com",
-                            Name = "SuperControle Chamados",
-                            SenderEmailConfigId = 1L
-                        });
                 });
 
             modelBuilder.Entity("ReleaseNotes.Entities.Model.Email.SenderEmailConfig", b =>
@@ -308,12 +285,6 @@ namespace ReleaseNotes.Repository.Migrations
                     b.HasKey("SenderConfigId");
 
                     b.ToTable("SenderEmailConfig");
-
-                    b.HasData(
-                        new
-                        {
-                            SenderConfigId = 1L
-                        });
                 });
 
             modelBuilder.Entity("ReleaseNotes.Entities.Model.Feedback.ReleasesFeedback", b =>

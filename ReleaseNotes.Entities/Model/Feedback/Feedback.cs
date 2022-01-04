@@ -23,12 +23,12 @@ namespace ReleaseNotes.Entities.Model.Feedback
         public bool OpenCall { get; set; }        
         public long? CallId { get; set; }
         [ForeignKey("CallId")]
-        public Call? Call { get; set; }
+        public virtual Call? Call { get; set; }
         public long? ModulePdvId { get; set; }
         [ForeignKey("ModulePdvId")]
-        public ModulePDV ModulePDV { get; set; }
+        public virtual ModulePDV ModulePDV { get; set; }
         public long? ModulePowerServerId { get; set; }
         [ForeignKey("ModulePowerServerId")]
-        public ModulePowerServer ModulePowerServer { get; set; }
+        public virtual ModulePowerServer ModulePowerServer { get; set; }
     }
 }
