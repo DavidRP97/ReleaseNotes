@@ -18,7 +18,6 @@
         None = 0,
         Resolved = 1,
         Waiting = 2
-
     }
 
     public enum Filters

@@ -31,6 +31,29 @@ namespace ReleaseNotes.Repository.Repositories
             return _mapper.Map<EmailDto>(senderEmail);
         }
 
+        public async Task<ReceiverDto> CreateReceiver(ReceiverDto receiver)
+        {
+            Receiver createReceiver = _mapper.Map<Receiver>(receiver);
+
+            await _context.AddAsync(createReceiver);
+            await Save();
+
+            return _mapper.Map<ReceiverDto>(createReceiver);
+        }
+
+        public async Task<bool> DeleteReceiver(long id)
+        {
+            Receiver receiver = await _context.Receivers.Where(x => x.Id == id).FirstOrDefaultAsync();
+
+            if (receiver == null) return false;
+
+            _context.Remove(receiver);
+
+            await Save();
+
+            return true;
+        }
+
         public async Task<EmailDto> GetConfig()
         {
             SenderEmailConfig senderEmail = await _context.SenderEmailConfig.Include(x => x.Sender).Include(y => y.Receivers).FirstOrDefaultAsync();

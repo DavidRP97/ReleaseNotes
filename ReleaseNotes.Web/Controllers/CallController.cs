@@ -44,17 +44,20 @@ namespace ReleaseNotes.Web.Controllers
 
             string Detail = string.Empty;
 
-            if (feedback.FeedbackFrom == Service.Utils.FeedbackFrom.PDV)
-            {                
-                var pdv = await _releasePDVService.FindModuleById(moduleId, token);
-                var release = await _releasePDVService.FindReleaseById(pdv.ReleaseId, token);
-                Detail = $"{pdv.ModuleName} / {pdv.Title} / Versão: {release.VersionNumber}";
-            }
-            else
+            switch (feedback.FeedbackFrom)
             {
-                var powerServer = await _releasePowerServerService.FindModuleById(moduleId, token);
-                var release = await _releasePowerServerService.FindReleaseById(powerServer.ReleaseId, token);
-                Detail = $"{powerServer.ModuleName} / {powerServer.Title} / Versão: {release.VersionNumber}";
+                case Service.Utils.FeedbackFrom.PDV:
+                    var pdv = await _releasePDVService.FindModuleById(moduleId, token);
+                    var release = await _releasePDVService.FindReleaseById(pdv.ReleaseId, token);
+                    Detail = $"{pdv.ModuleName} / {pdv.Title} / Versão: {release.VersionNumber}";
+                    break;
+                case Service.Utils.FeedbackFrom.PowerServer:
+                    var powerServer = await _releasePowerServerService.FindModuleById(moduleId, token);
+                    var releasePower = await _releasePowerServerService.FindReleaseById(powerServer.ReleaseId, token);
+                    Detail = $"{powerServer.ModuleName} / {powerServer.Title} / Versão: {releasePower.VersionNumber}";
+                    break;
+                default:
+                    break;
             }
 
             ViewBag.Date = DateTime.Now.ToString();
@@ -116,7 +119,7 @@ namespace ReleaseNotes.Web.Controllers
                     Content = $"Chamado Aberto Por: {response.UserName}<br/>Assunto: {response.Subject}<br/>Conteúdo: {response.Detail}",
                     EmailSender = Sender,
                     SendSmtpEmailTo = To,
-                    Subject = $"ATENÇÃO!!! Novo Chamado Aberto Para: {response.UserName}",
+                    Subject = $"⚠️ ATENÇÃO!!! Novo Chamado Aberto Para: <b>{response.UserName}</b>",
                 };
 
                 var emailSend = await _emailSender.SendEmail(email, apiKey);

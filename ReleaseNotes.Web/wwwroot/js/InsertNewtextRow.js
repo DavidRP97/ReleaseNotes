@@ -1,0 +1,3 @@
+﻿$("#event-click").click(function () {
+    $("#formulario").append('<div class="col-5"><div class="form-group"><input asp-for="@item.Name" class="form-control" /><span asp-validation-for="@item.Name" class="text-danger"></span></div></div><div class="col-5"><div class="form-group"><input asp-for="@item.Email" class="form-control" /><span asp-validation-for="@item.Email" class="text-danger"></span></div></div><div class="form-group col-2"><a asp-action="DeleteReceiver" asp-controller="Email" asp-route-id="@item.Id" class="btn btn-primary btn-sm">Salvar</a></div>');
+});

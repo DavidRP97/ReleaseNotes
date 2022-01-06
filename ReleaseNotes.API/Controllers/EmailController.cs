@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ReleaseNotes.Repository.DTO;
 using ReleaseNotes.Repository.Interfaces;
 
 namespace ReleaseNotes.API.Controllers
@@ -18,7 +19,24 @@ namespace ReleaseNotes.API.Controllers
         [Authorize]
         public async Task<ActionResult> GetConfig()
         {
-            return Ok(await _emailRepository.GetConfig()); 
+            return Ok(await _emailRepository.GetConfig());
+        }
+        [HttpDelete("{id}")]
+        [Authorize]
+        public async Task<ActionResult<bool>> DeleteReceiver(long id)
+        {
+            var status = await _emailRepository.DeleteReceiver(id);
+
+            if (!status) return BadRequest();
+            return Ok(status);
+        }
+        [HttpPost]
+        [Authorize]
+        public async Task<ActionResult<ReceiverDto>> Create([FromBody] ReceiverDto receiver)
+        {
+            if (receiver == null) return BadRequest();
+
+            return Ok(await _emailRepository.CreateReceiver(receiver));
         }
     }
 }

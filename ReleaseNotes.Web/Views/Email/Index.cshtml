@@ -1,1 +1,84 @@
-﻿
+﻿@model SenderEmailConfigViewModel
+
+@{
+    ViewData["Layout"] = "Contas de Email";
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h3 class="text-center title-2">Configurar Remetente</h3>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="row">
+                        <div class="col-5">
+                            <div class="form-group">
+                                <label for="company" class=" form-control-label">Nome Remetente</label>
+                                <input asp-for="Sender.Name" class="form-control" />
+                                <span asp-validation-for="Sender.Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="form-group">
+                                <label for="company" class=" form-control-label">Email Remetente</label>
+                                <input asp-for="Sender.Email" class="form-control" />
+                                <span asp-validation-for="Sender.Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-2">
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            Editar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">
+                    <h3 class="text-center title-2">Configurar Destinatário</h3>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="company" class=" form-control-label">Nome Destinatário</label>
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <div class="form-group">
+                            <label for="company" class="form-control-label">Email Destinatário</label>
+                        </div>
+                    </div>
+                    @foreach (var item in Model.Receivers)
+                    {
+                        <div class="row">
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <input asp-for="@item.Name" class="form-control" />
+                                    <span asp-validation-for="@item.Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                                <div class="form-group">
+                                    <input asp-for="@item.Email" class="form-control" />
+                                    <span asp-validation-for="@item.Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group col-2">
+                                <a asp-action="DeleteReceiver" asp-controller="Email" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Excluir</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
