@@ -18,7 +18,7 @@ namespace ReleaseNotes.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            
+
             var token = await HttpContext.GetTokenAsync("access_token");
             var emailConfig = await _emailService.FindEmail(token);
 
@@ -27,7 +27,7 @@ namespace ReleaseNotes.Web.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult>DeleteReceiver(long id)
+        public async Task<ActionResult> DeleteReceiver(long id)
         {
             var token = await HttpContext.GetTokenAsync("access_token");
 
@@ -39,15 +39,25 @@ namespace ReleaseNotes.Web.Controllers
         }
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CreateReceiver(ReceiverViewModel model)
+        public async Task<IActionResult> CreateReceiver(SenderEmailConfigViewModel model)
         {
             var token = await HttpContext.GetTokenAsync("access_token");
 
-            var response = await _emailService.CreateReceiver(model, token);
+            if (model.Email != null && model.Name != null)
+            {
+                var receiver = new ReceiverViewModel
+                {
+                    Name = model.Name,
+                    Email = model.Email,
+                    SenderEmailConfigId = model.SenderConfigId
+                };
 
-            if (response != null) return RedirectToAction(nameof(Index));
+                var response = await _emailService.CreateReceiver(receiver, token);
 
-            return View("Index");
+                if (response != null) return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

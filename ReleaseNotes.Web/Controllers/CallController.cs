@@ -12,24 +12,24 @@ namespace ReleaseNotes.Web.Controllers
 {
     public class CallController : Controller
     {
-        private readonly IReleasePDVService _releasePDVService; 
-        private readonly IReleasePowerServerService _releasePowerServerService; 
+        private readonly IReleasePDVService _releasePDVService;
+        private readonly IReleasePowerServerService _releasePowerServerService;
         private readonly IFeedbackService _feedbackService;
         private readonly IEmailService _emailService;
         private readonly IEmailSender _emailSender;
         private readonly ICallService _callService;
         private readonly IWebHostEnvironment _webHostEnvironment;
         public readonly IConfiguration _configuration;
-        public CallController(ICallService callService, IWebHostEnvironment webHostEnvironment, 
+        public CallController(ICallService callService, IWebHostEnvironment webHostEnvironment,
             IEmailSender emailSender, IConfiguration configuration, IEmailService emailService,
-            IFeedbackService feedbackService, IReleasePowerServerService releasePowerServerService, 
+            IFeedbackService feedbackService, IReleasePowerServerService releasePowerServerService,
             IReleasePDVService releasePDVService)
         {
             _releasePDVService = releasePDVService;
             _releasePowerServerService = releasePowerServerService;
             _feedbackService = feedbackService;
             _emailService = emailService;
-            _configuration = configuration; 
+            _configuration = configuration;
             _callService = callService;
             _webHostEnvironment = webHostEnvironment;
             _emailSender = emailSender;
@@ -114,12 +114,14 @@ namespace ReleaseNotes.Web.Controllers
                     });
                 }
 
+                string Urgente = model.IsUrgent == true ? "Com Urgência" : string.Empty;
+
                 NewCallOpenedEmail email = new NewCallOpenedEmail
                 {
-                    Content = $"Chamado Aberto Por: {response.UserName}<br/>Assunto: {response.Subject}<br/>Conteúdo: {response.Detail}",
+                    Content = $"Chamado Aberto Por: {response.UserName}<br/>Assunto: {response.Subject}<br/>Detalhes: {response.Detail}",
                     EmailSender = Sender,
                     SendSmtpEmailTo = To,
-                    Subject = $"⚠️ ATENÇÃO!!! Novo Chamado Aberto Para: <b>{response.UserName}</b>",
+                    Subject = $"⚠️ ATENÇÃO!!! Novo Chamado {Urgente} Aberto Por: {response.UserName}",
                 };
 
                 var emailSend = await _emailSender.SendEmail(email, apiKey);
@@ -134,7 +136,7 @@ namespace ReleaseNotes.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Index(int? pagina)
         {
-            
+
             const int TotalPorPagina = 10;
 
             int NumeroPagina = (pagina ?? 1);
@@ -150,8 +152,19 @@ namespace ReleaseNotes.Web.Controllers
                 return View(response.OrderByDescending(x => x.DateToDatetime).Where(x => x.Email == Email).ToPagedList(NumeroPagina, TotalPorPagina));
             }
 
-            return View(response.OrderByDescending(x => x.DateToDatetime).Where(x => x.Status != Service.Utils.Status.Resolved).ToPagedList(NumeroPagina, TotalPorPagina));
+            return View(response.OrderBy(x => x.PriorityDegree).Where(x => x.Status != Service.Utils.Status.Resolved).ToPagedList(NumeroPagina, TotalPorPagina));
 
+        }
+        [Authorize]
+        public async Task<IActionResult> Details(long id)
+        {
+            var token = await HttpContext.GetTokenAsync("access_token");
+
+            var response = await _callService.FindCallById(id, token);
+
+            if (response != null) return View(response);
+
+            return View();
         }
         public async Task<IActionResult> Update(long id)
         {

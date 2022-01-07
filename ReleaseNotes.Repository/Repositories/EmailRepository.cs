@@ -60,5 +60,6 @@ namespace ReleaseNotes.Repository.Repositories
 
             return _mapper.Map<EmailDto>(senderEmail);
         }
+
     }
 }

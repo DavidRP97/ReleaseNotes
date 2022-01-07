@@ -16,7 +16,6 @@
                             <th>Assunto</th>
                             <th>Detalhes</th>
                             <th>Data</th>
-                            <th>Urgente</th>
                             <th>Prioridade</th>
                             <th>Status</th>
                         </tr>
@@ -37,19 +36,7 @@
                                 }
                                 <td>@call.Subject</td>
                                 <td>@call.Detail</td>
-                                <td>@call.DateToDatetime</td>
-                                @if (@call.IsUrgent == true)
-                                {
-                                    <td>
-                                        <span class="badge badge-danger">Sim</span>
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        <span class="badge badge-success">Não</span>
-                                    </td>
-                                }
+                                <td>@call.DateToDatetime</td>                                
                                 @if (@call.PriorityDegree == Priority.None)
                                 {
                                     <td>

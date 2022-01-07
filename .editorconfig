@@ -23,3 +23,6 @@ dotnet_diagnostic.CS8600.severity = none
 
 # CS8605: Executando a conversão unboxing de um valor possivelmente nulo.
 dotnet_diagnostic.CS8605.severity = none
+
+# CS8601: Possível atribuição de referência nula.
+dotnet_diagnostic.CS8601.severity = none

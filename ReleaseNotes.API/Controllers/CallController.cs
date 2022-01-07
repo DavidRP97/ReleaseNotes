@@ -19,7 +19,7 @@ namespace ReleaseNotes.API.Controllers
 
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult>getById(long id)
+        public async Task<ActionResult>GetById(long id)
         {
             if (id == 0) return NotFound();
 
