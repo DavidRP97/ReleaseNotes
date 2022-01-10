@@ -1,4 +1,5 @@
-﻿using ReleaseNotes.Entities.Model.Consts;
+﻿using Microsoft.AspNetCore.Http;
+using ReleaseNotes.Entities.Model.Consts;
 
 namespace ReleaseNotes.Repository.DTO
 {
@@ -10,6 +11,7 @@ namespace ReleaseNotes.Repository.DTO
         public Status Status { get; set; }
         public FeedbackFrom Software { get; set; }
         public Priority PriorityDegree { get; set; }
+        public string? Attachment { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Detail { get; set; }

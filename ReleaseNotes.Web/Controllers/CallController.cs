@@ -5,6 +5,7 @@ using ReleaseNotes.Service.Interfaces;
 using ReleaseNotes.Service.Models.Call;
 using ReleaseNotes.Service.Models.Email;
 using ReleaseNotes.Web.Utils;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using X.PagedList;
 
@@ -73,21 +74,36 @@ namespace ReleaseNotes.Web.Controllers
         }
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Create(CallViewModel model, IFormFile image)
+        public async Task<IActionResult> Create(CallViewModel model)
         {
             var token = await HttpContext.GetTokenAsync("access_token");
 
-            if (image != null)
-            {
-                string directoryFolder = Path.Combine(_webHostEnvironment.WebRootPath, "ImagensAnexas");
-                string imageName = Guid.NewGuid().ToString() + image.FileName + model.UserName;
+            var files = HttpContext.Request.Form.Files;
 
-                using (FileStream fs = new FileStream(Path.Combine(directoryFolder, imageName), FileMode.Create))
+            foreach (var image in files)
+            {
+                if (image != null && image.Length > 0)
                 {
-                    await image.CopyToAsync(fs);
-                    model.Imagem = "~/ImagensAnexas/" + imageName;
+                    var file = image;
+
+                    var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "imagensAnexas");
+
+                    if (file.Length > 0)
+                    {
+                        var fileName = ContentDispositionHeaderValue.Parse(
+                            file.ContentDisposition).FileName.Trim('"');
+
+                        System.Console.WriteLine(fileName);
+
+                        using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
+                        {
+                            await file.CopyToAsync(fileStream);
+                            model.Imagem = fileName;
+                        }
+                    }
                 }
             }
+
 
             var response = await _callService.CreateCall(model, token);
 

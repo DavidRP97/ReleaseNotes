@@ -39,6 +39,9 @@ namespace ReleaseNotes.API.MapperConfig
 
                 config.CreateMap<ReceiverDto, Receiver>();
                 config.CreateMap<Receiver, ReceiverDto>();
+
+                config.CreateMap<AttachmentDto, Attachment>();
+                config.CreateMap<Attachment, AttachmentDto>();  
             });
 
             return mappingConfig;

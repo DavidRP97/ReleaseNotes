@@ -19,11 +19,11 @@ namespace ReleaseNotes.Repository.Repositories
 
         public async Task<bool> DeleteRange(long id)
         {
-            var entity = _context.ReleasePDVs.FindAsync(id);
+            ReleasePDV releasePDV = await _context.ReleasePDVs.Include(y => y.Modules).Where(x => x.ReleaseId == id).FirstOrDefaultAsync();
 
-            if (entity == null) return false;
+            if (releasePDV == null) return false;
 
-            _context.RemoveRange(entity);
+            _context.Remove(releasePDV);
 
             await Save();
 

@@ -6,6 +6,7 @@ namespace ReleaseNotes.Repository.Interfaces
 {
     public interface ICallRepository : IGenericRepository<Call>
     {
+        Task<AttachmentDto>AddAttachment(AttachmentDto attachment);
         Task<CallDto> CreateCall(CallDto call);
         Task<IEnumerable<CallDto>> GetAllCalls();
         Task<CallDto> UpdateCall(CallDto call);

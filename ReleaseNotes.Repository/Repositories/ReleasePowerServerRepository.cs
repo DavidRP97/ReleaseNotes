@@ -28,10 +28,12 @@ namespace ReleaseNotes.Repository.Repositories
 
         public async Task<bool> DeleteRange(long id)
         {
-            var entity = await GetById(id);
-            if (entity == null) return false;
+            ReleasePowerServer releasePowerServer = await _context.Releases.Include(y => y.Modules).Where(x => x.ReleaseId == id).FirstOrDefaultAsync();
 
-            _context.Releases.RemoveRange(entity);
+            if (releasePowerServer == null) return false;
+
+            _context.Remove(releasePowerServer);
+
             await Save();
 
             return true;

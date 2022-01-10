@@ -1,4 +1,5 @@
-﻿using ReleaseNotes.Entities.Model.Consts;
+﻿using Microsoft.AspNetCore.Http;
+using ReleaseNotes.Entities.Model.Consts;
 using ReleaseNotes.Entities.Model.Feedback;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,6 +17,7 @@ namespace ReleaseNotes.Entities.Model.Calls
         public Priority PriorityDegree { get; set; }
         public Status Status { get; set; }
         public FeedbackFrom Software { get; set; }
+        public ICollection<Attachment>? Attachments { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Detail { get; set; }

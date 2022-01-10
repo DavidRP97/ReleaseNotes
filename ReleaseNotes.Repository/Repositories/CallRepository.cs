@@ -17,6 +17,16 @@ namespace ReleaseNotes.Repository.Repositories
             _mapper = mapper;
         }
 
+        public async Task<AttachmentDto> AddAttachment(AttachmentDto attachment)
+        {
+            Attachment att  = _mapper.Map<Attachment>(attachment);
+
+            await _context.AddAsync(att);
+            await Save();
+
+            return _mapper.Map<AttachmentDto>(att);
+        }
+
         public async Task<CallDto> CreateCall(CallDto call)
         {
             Call createCall = _mapper.Map<Call>(call);

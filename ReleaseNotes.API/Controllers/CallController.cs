@@ -10,7 +10,7 @@ namespace ReleaseNotes.API.Controllers
     [ApiController]
     public class CallController : ControllerBase
     {
-        private readonly ICallRepository _callRepository;
+        private readonly ICallRepository _callRepository;        
 
         public CallController(ICallRepository callRepository)
         {
@@ -32,11 +32,12 @@ namespace ReleaseNotes.API.Controllers
         {
             return Ok(await _callRepository.GetAll());
         }
+        
         [HttpPost]
         public async Task<ActionResult> Create([FromBody]CallDto call)
         {
             if (call == null) return BadRequest();
-            
+
             return Ok(await _callRepository.CreateCall(call));
         }
         [HttpPut]
