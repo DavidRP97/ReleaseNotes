@@ -16,7 +16,6 @@ namespace ReleaseNotes.API.Controllers
             _emailRepository = emailRepository ?? throw new ArgumentNullException(nameof(emailRepository));
         }
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult> GetConfig()
         {
             return Ok(await _emailRepository.GetConfig());
@@ -31,7 +30,6 @@ namespace ReleaseNotes.API.Controllers
             return Ok(status);
         }
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<ReceiverDto>> Create([FromBody] ReceiverDto receiver)
         {
             if (receiver == null) return BadRequest();

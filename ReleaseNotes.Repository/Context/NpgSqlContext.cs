@@ -10,7 +10,7 @@ using ReleaseNotes.Entities.Model.ReleasesPowerServer;
 
 namespace ReleaseNotes.Repository.Context
 {
-    public class NpgSqlContext : IdentityDbContext<ApplicationUser>
+    public class NpgSqlContext : DbContext
     {
         public NpgSqlContext() { }
         public NpgSqlContext(DbContextOptions<NpgSqlContext> options) : base(options) { }
@@ -29,12 +29,46 @@ namespace ReleaseNotes.Repository.Context
 
         //CALL
         public DbSet<Call> Calls { get; set; }
-        public DbSet<Attachment> Attachments { get; set; }  
+        public DbSet<Attachment> Attachments { get; set; }
 
         //EMAIL
         public DbSet<SenderEmailConfig> SenderEmailConfig { get; set; }
         public DbSet<Receiver> Receivers { get; set; }
         public DbSet<Sender> Senders { get; set; }
-           
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<SenderEmailConfig>().HasData(new SenderEmailConfig
+            {
+                SenderConfigId = 1
+            });
+            modelBuilder.Entity<Receiver>(r =>
+            {
+                r.HasData(new Receiver
+                {
+                    Id = 1,
+                    SenderEmailConfigId = 1,
+                    Name = "David Rodrigues",
+                    Email = "d.rodrigues0505@gmail.com"
+                });
+                r.HasData(new Receiver
+                {
+                    Id = 2,
+                    SenderEmailConfigId = 1,
+                    Name = "Rogério Trevisan",
+                    Email = "analise@supercontrole.com"
+                });
+            });
+            modelBuilder.Entity<Sender>().HasData(new Sender
+            {
+                Id = 1,
+                SenderEmailConfigId = 1,
+                Email = "desenvolvimento04@supercontrole.com",
+                Name = "SuperControle Chamados"
+            });
+        }
+
     }
 }

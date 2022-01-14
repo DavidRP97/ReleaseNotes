@@ -78,33 +78,6 @@ namespace ReleaseNotes.Web.Controllers
         {
             var token = await HttpContext.GetTokenAsync("access_token");
 
-            var files = HttpContext.Request.Form.Files;
-
-            foreach (var image in files)
-            {
-                if (image != null && image.Length > 0)
-                {
-                    var file = image;
-
-                    var uploads = Path.Combine(_webHostEnvironment.WebRootPath, "imagensAnexas");
-
-                    if (file.Length > 0)
-                    {
-                        var fileName = ContentDispositionHeaderValue.Parse(
-                            file.ContentDisposition).FileName.Trim('"');
-
-                        System.Console.WriteLine(fileName);
-
-                        using (var fileStream = new FileStream(Path.Combine(uploads, file.FileName), FileMode.Create))
-                        {
-                            await file.CopyToAsync(fileStream);
-                            model.Imagem = fileName;
-                        }
-                    }
-                }
-            }
-
-
             var response = await _callService.CreateCall(model, token);
 
             var emailResponse = await _emailService.FindEmail(token);

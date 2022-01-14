@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication;
 using ReleaseNotes.IoC.Config;
 using ReleaseNotes.Service.Interfaces;
 using ReleaseNotes.Service.Services;
+using System.Net;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -35,7 +36,7 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+//Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
