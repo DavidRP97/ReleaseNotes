@@ -95,5 +95,13 @@ namespace ReleaseNotes.Repository.Repositories
 
             return true;
         }
+
+        public async Task<AttachmentDto> AddFiles(AttachmentDto attachmentDto)
+        {
+            ZipFilePdv attachment = _mapper.Map<ZipFilePdv>(attachmentDto);
+            await _context.AddAsync(attachment);
+            await Save();
+            return _mapper.Map<AttachmentDto>(attachment);
+        }
     }
 }

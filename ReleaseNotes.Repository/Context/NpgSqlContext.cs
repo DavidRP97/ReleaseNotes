@@ -19,10 +19,12 @@ namespace ReleaseNotes.Repository.Context
         //PDV
         public DbSet<ReleasePDV> ReleasePDVs { get; set; }
         public DbSet<ModulePDV> ModulePDVs { get; set; }
+        public DbSet<ZipFilePdv> ZipFilesPdv { get; set;}
 
         //POWERSERVER
         public DbSet<ModulePowerServer> Modules { get; set; }
         public DbSet<ReleasePowerServer> Releases { get; set; }
+        public DbSet<ZipFilePowerServer> ZipFilesPowerServer { get; set; }
 
         //FEEDBACK
         public DbSet<ReleasesFeedback> Feedbacks { get; set; }

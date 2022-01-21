@@ -41,7 +41,13 @@ namespace ReleaseNotes.API.MapperConfig
                 config.CreateMap<Receiver, ReceiverDto>();
 
                 config.CreateMap<AttachmentDto, Attachment>();
-                config.CreateMap<Attachment, AttachmentDto>();  
+                config.CreateMap<Attachment, AttachmentDto>();
+
+                config.CreateMap<AttachmentDto, ZipFilePdv>();
+                config.CreateMap<ZipFilePdv, AttachmentDto>();
+
+                config.CreateMap<AttachmentDto, ZipFilePowerServer>();
+                config.CreateMap<ZipFilePowerServer, AttachmentDto>();
             });
 
             return mappingConfig;

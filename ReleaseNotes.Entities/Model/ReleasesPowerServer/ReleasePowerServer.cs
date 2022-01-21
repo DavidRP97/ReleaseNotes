@@ -11,5 +11,6 @@ namespace ReleaseNotes.Entities.Model.ReleasesPowerServer
         [Required]
         public string VersionDate { get; set; }
         public IEnumerable<ModulePowerServer>? Modules { get; set; }
+        public IEnumerable<ZipFilePowerServer>? ZipFiles { get; set; }
     }
 }

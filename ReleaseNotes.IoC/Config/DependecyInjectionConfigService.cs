@@ -6,7 +6,10 @@ namespace ReleaseNotes.IoC.Config
 {
     public static class DependecyInjectionConfigService
     {
-        public const string BaseAdress = "http://supercontrole.ddns.net:3370/";
+        //PRODUCTION
+        //public const string BaseAdress = "http://supercontrole.ddns.net:3370/";
+        //DEVELOPMENT
+        public const string BaseAdress = "https://localhost:7221";
 
         public static void ConfigDIService(this IServiceCollection Services)
         {

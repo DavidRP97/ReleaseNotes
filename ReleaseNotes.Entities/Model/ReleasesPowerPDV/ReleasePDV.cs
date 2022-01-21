@@ -11,5 +11,6 @@ namespace ReleaseNotes.Entities.Model.ReleasesPowerPDV
         [Required]
         public string VersionNumber { get; set; }
         public IEnumerable<ModulePDV>? Modules { get; set; }
+        public IEnumerable<ZipFilePdv>? ZipFiles { get; set; }
     }
 }

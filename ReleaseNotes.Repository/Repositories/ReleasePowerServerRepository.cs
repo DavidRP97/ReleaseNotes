@@ -98,5 +98,13 @@ namespace ReleaseNotes.Repository.Repositories
 
             return true;
         }
+
+        public async Task<AttachmentDto> AddFiles(AttachmentDto attachmentDto)
+        {
+            ZipFilePowerServer attachment = _mapper.Map<ZipFilePowerServer>(attachmentDto);
+            await _context.ZipFilesPowerServer.AddAsync(attachment);
+            await _context.SaveChangesAsync();
+            return _mapper.Map<AttachmentDto>(attachment);
+        }
     }
 }

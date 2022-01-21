@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ReleaseNotes.API.Model;
 using ReleaseNotes.API.Utils;
 using ReleaseNotes.Entities.Model.ReleasesPowerPDV;
 using ReleaseNotes.Repository.DTO;
@@ -15,6 +16,21 @@ namespace ReleaseNotes.API.Controllers
         public ReleasePDVController(IReleasePowerPDVRepository releaseRepository)
         {
             _releasePowerPDVRepository = releaseRepository ?? throw new ArgumentNullException(nameof(releaseRepository));
+        }
+        [HttpGet("Current-Version")]
+        public async Task<ActionResult> GetCurrentVersion()
+        {
+            var release = await _releasePowerPDVRepository.GetAll();
+            var current = release.LastOrDefault();
+
+            var currentVersion = new CurrentVersion
+            {
+                Id = current.ReleaseId,
+                Version = current.VersionNumber
+            };
+
+            if (currentVersion == null) return NotFound();
+            return Ok(currentVersion);
         }
         [HttpGet("{id}")]
         public async Task<ActionResult> FindById(long id)

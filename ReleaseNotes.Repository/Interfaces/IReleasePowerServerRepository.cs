@@ -6,6 +6,7 @@ namespace ReleaseNotes.Repository.Interfaces
 {
     public interface IReleasePowerServerRepository : IGenericRepository<ReleasePowerServer>
     {
+        Task<AttachmentDto> AddFiles(AttachmentDto attachmentDto);
         public Task<ReleaseDto> InsertRelease(ReleaseDto release);
         public Task<ModuleDto> InsertModule(ModuleDto module);
         public Task<ModuleDto> UpdateModules(ModuleDto module);

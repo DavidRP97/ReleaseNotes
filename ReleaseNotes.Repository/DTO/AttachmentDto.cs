@@ -3,7 +3,7 @@
     public class AttachmentDto
     {
         public long Id { get; set; }
-        public string File { get; set; }
-        public long CallId { get; set; }
+        public string FilePath { get; set; }
+        public long ReleasePowerServerId { get; set; }
     }
 }
